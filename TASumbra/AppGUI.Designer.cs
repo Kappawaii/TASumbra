@@ -35,27 +35,29 @@
             this.PenumbraPathSelect = new System.Windows.Forms.Button();
             this.PenumbraPathTextBox = new System.Windows.Forms.MaskedTextBox();
             this.MovieEditor = new System.Windows.Forms.TabPage();
+            this.Load_Movie = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.MovieNumberLabel = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Forwards = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Backwards = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Left = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Right = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tests = new System.Windows.Forms.TabPage();
+            this.performanceText = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.fpsLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.framesLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.GameTime = new System.Windows.Forms.Label();
             this.LaunchRunLabel = new System.Windows.Forms.Label();
             this.penumbraTimeText = new System.Windows.Forms.Label();
             this.LaunchRun = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.framesLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.fpsLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.performanceText = new System.Windows.Forms.Label();
+            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Left = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Right = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl.SuspendLayout();
             this.Settings.SuspendLayout();
             this.MovieEditor.SuspendLayout();
@@ -119,6 +121,8 @@
             // 
             // MovieEditor
             // 
+            this.MovieEditor.Controls.Add(this.Load_Movie);
+            this.MovieEditor.Controls.Add(this.button1);
             this.MovieEditor.Controls.Add(this.MovieNumberLabel);
             this.MovieEditor.Controls.Add(this.numericUpDown1);
             this.MovieEditor.Controls.Add(this.dataGridView1);
@@ -129,6 +133,26 @@
             this.MovieEditor.TabIndex = 1;
             this.MovieEditor.Text = "Movie Editor";
             this.MovieEditor.UseVisualStyleBackColor = true;
+            // 
+            // Load_Movie
+            // 
+            this.Load_Movie.Location = new System.Drawing.Point(215, 20);
+            this.Load_Movie.Name = "Load_Movie";
+            this.Load_Movie.Size = new System.Drawing.Size(75, 23);
+            this.Load_Movie.TabIndex = 4;
+            this.Load_Movie.Text = "Load Movie";
+            this.Load_Movie.UseVisualStyleBackColor = true;
+            this.Load_Movie.Click += new System.EventHandler(this.LoadMovie_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(296, 20);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Save Movie";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.SaveMovie_Click);
             // 
             // MovieNumberLabel
             // 
@@ -148,6 +172,8 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -167,70 +193,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(544, 427);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
-            // 
-            // FrameNumber
-            // 
-            this.FrameNumber.FillWeight = 55F;
-            this.FrameNumber.Frozen = true;
-            this.FrameNumber.HeaderText = "Frame n°";
-            this.FrameNumber.Name = "FrameNumber";
-            this.FrameNumber.Width = 55;
-            // 
-            // Forwards
-            // 
-            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Forwards.FillWeight = 65F;
-            this.Forwards.Frozen = true;
-            this.Forwards.HeaderText = "Forwards";
-            this.Forwards.Name = "Forwards";
-            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Forwards.Width = 56;
-            // 
-            // Backwards
-            // 
-            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Backwards.FillWeight = 75F;
-            this.Backwards.Frozen = true;
-            this.Backwards.HeaderText = "Backwards";
-            this.Backwards.Name = "Backwards";
-            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Backwards.Width = 66;
-            // 
-            // Left
-            // 
-            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Left.FillWeight = 50F;
-            this.Left.Frozen = true;
-            this.Left.HeaderText = "Left";
-            this.Left.Name = "Left";
-            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Left.Width = 31;
-            // 
-            // Right
-            // 
-            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Right.Frozen = true;
-            this.Right.HeaderText = "Right";
-            this.Right.Name = "Right";
-            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Right.Width = 38;
-            // 
-            // MouseX
-            // 
-            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseX.Frozen = true;
-            this.MouseX.HeaderText = "MouseX";
-            this.MouseX.Name = "MouseX";
-            this.MouseX.Width = 71;
-            // 
-            // MouseY
-            // 
-            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseY.Frozen = true;
-            this.MouseY.HeaderText = "MouseY";
-            this.MouseY.Name = "MouseY";
-            this.MouseY.Width = 71;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
             // tests
             // 
@@ -251,6 +214,63 @@
             this.tests.TabIndex = 2;
             this.tests.Text = "tests";
             this.tests.UseVisualStyleBackColor = true;
+            // 
+            // performanceText
+            // 
+            this.performanceText.AutoSize = true;
+            this.performanceText.Location = new System.Drawing.Point(82, 137);
+            this.performanceText.MinimumSize = new System.Drawing.Size(50, 0);
+            this.performanceText.Name = "performanceText";
+            this.performanceText.Size = new System.Drawing.Size(50, 13);
+            this.performanceText.TabIndex = 9;
+            this.performanceText.Text = "-1 µs";
+            this.performanceText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.performanceText.Click += new System.EventHandler(this.PerformanceText_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Performance";
+            // 
+            // fpsLabel
+            // 
+            this.fpsLabel.AutoSize = true;
+            this.fpsLabel.Location = new System.Drawing.Point(59, 111);
+            this.fpsLabel.Name = "fpsLabel";
+            this.fpsLabel.Size = new System.Drawing.Size(16, 13);
+            this.fpsLabel.TabIndex = 7;
+            this.fpsLabel.Text = "-1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 111);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Fps:";
+            // 
+            // framesLabel
+            // 
+            this.framesLabel.AutoSize = true;
+            this.framesLabel.Location = new System.Drawing.Point(59, 73);
+            this.framesLabel.Name = "framesLabel";
+            this.framesLabel.Size = new System.Drawing.Size(16, 13);
+            this.framesLabel.TabIndex = 5;
+            this.framesLabel.Text = "-1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Frames:";
             // 
             // GameTime
             // 
@@ -291,61 +311,76 @@
             this.LaunchRun.UseVisualStyleBackColor = true;
             this.LaunchRun.Click += new System.EventHandler(this.GetTime_Click);
             // 
-            // label2
+            // FrameNumber
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 73);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Frames:";
+            this.FrameNumber.FillWeight = 55F;
+            this.FrameNumber.Frozen = true;
+            this.FrameNumber.HeaderText = "Frame n°";
+            this.FrameNumber.Name = "FrameNumber";
+            this.FrameNumber.Width = 55;
             // 
-            // framesLabel
+            // Forwards
             // 
-            this.framesLabel.AutoSize = true;
-            this.framesLabel.Location = new System.Drawing.Point(59, 73);
-            this.framesLabel.Name = "framesLabel";
-            this.framesLabel.Size = new System.Drawing.Size(16, 13);
-            this.framesLabel.TabIndex = 5;
-            this.framesLabel.Text = "-1";
+            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Forwards.FillWeight = 65F;
+            this.Forwards.Frozen = true;
+            this.Forwards.HeaderText = "Forwards";
+            this.Forwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Forwards.Name = "Forwards";
+            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Forwards.Width = 56;
             // 
-            // label4
+            // Backwards
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 111);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Fps:";
+            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Backwards.FillWeight = 75F;
+            this.Backwards.Frozen = true;
+            this.Backwards.HeaderText = "Backwards";
+            this.Backwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Backwards.Name = "Backwards";
+            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Backwards.Width = 66;
             // 
-            // fpsLabel
+            // Left
             // 
-            this.fpsLabel.AutoSize = true;
-            this.fpsLabel.Location = new System.Drawing.Point(59, 111);
-            this.fpsLabel.Name = "fpsLabel";
-            this.fpsLabel.Size = new System.Drawing.Size(16, 13);
-            this.fpsLabel.TabIndex = 7;
-            this.fpsLabel.Text = "-1";
+            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Left.FillWeight = 50F;
+            this.Left.Frozen = true;
+            this.Left.HeaderText = "Left";
+            this.Left.Name = "Left";
+            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Left.Width = 31;
             // 
-            // label3
+            // Right
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 137);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Performance";
+            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Right.Frozen = true;
+            this.Right.HeaderText = "Right";
+            this.Right.Name = "Right";
+            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Right.Width = 38;
             // 
-            // performanceText
+            // MouseX
             // 
-            this.performanceText.AutoSize = true;
-            this.performanceText.Location = new System.Drawing.Point(82, 137);
-            this.performanceText.MinimumSize = new System.Drawing.Size(50, 0);
-            this.performanceText.Name = "performanceText";
-            this.performanceText.Size = new System.Drawing.Size(50, 13);
-            this.performanceText.TabIndex = 9;
-            this.performanceText.Text = "-11 µs";
-            this.performanceText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseX.Frozen = true;
+            this.MouseX.HeaderText = "MouseX";
+            this.MouseX.Name = "MouseX";
+            this.MouseX.Width = 71;
+            // 
+            // MouseY
+            // 
+            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseY.Frozen = true;
+            this.MouseY.HeaderText = "MouseY";
+            this.MouseY.Name = "MouseY";
+            this.MouseY.Width = 71;
             // 
             // AppGUI
             // 
@@ -381,13 +416,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label MovieNumberLabel;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FrameNumber;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Forwards;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Backwards;
-        private new System.Windows.Forms.DataGridViewCheckBoxColumn Left;
-        private new System.Windows.Forms.DataGridViewCheckBoxColumn Right;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MouseX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MouseY;
         private System.Windows.Forms.TabPage tests;
         private System.Windows.Forms.Label penumbraTimeText;
         private System.Windows.Forms.Button LaunchRun;
@@ -399,5 +427,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label performanceText;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Load_Movie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FrameNumber;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Forwards;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Backwards;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Left;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Right;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MouseX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MouseY;
     }
 }
