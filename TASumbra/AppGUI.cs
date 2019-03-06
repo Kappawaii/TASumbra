@@ -20,7 +20,16 @@ namespace TASumbra
         public AppGUI()
         {
             InitializeComponent();
+            InitAboutTab();
         }
+
+        private void InitAboutTab()
+        {
+            PictureBox1.Anchor = AnchorStyles.Bottom;
+            MadeByKappa.Anchor = AnchorStyles.Bottom;
+            License.Anchor = AnchorStyles.Bottom;
+        }
+
         private void InitializeDataTable()
         {
             dt = new DataTable("TASumbra");
@@ -295,7 +304,7 @@ namespace TASumbra
 
         private void LoadMovie_Click(object sender, EventArgs e)
         {
-            LoadingLabel.Visible = true;
+            //LoadingLabel.Visible = true;
             dt.Clear();
             try
             {
@@ -303,10 +312,10 @@ namespace TASumbra
             }
             catch (Exception)
             {
-                LoadingLabel.Visible = false;
-                throw;
+                //LoadingLabel.Visible = false;
+                //throw;
             }
-            LoadingLabel.Visible = false;
+            //LoadingLabel.Visible = false;
             NumberOfFramesNumeric.Value = dt.Rows.Count;
         }
 

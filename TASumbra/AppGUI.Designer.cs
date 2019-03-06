@@ -35,6 +35,7 @@
             this.PenumbraPathSelect = new System.Windows.Forms.Button();
             this.PenumbraPathTextBox = new System.Windows.Forms.MaskedTextBox();
             this.MovieEditor = new System.Windows.Forms.TabPage();
+            this.LoadingLabel = new System.Windows.Forms.Label();
             this.ChangeNumberOfFramesButton = new System.Windows.Forms.Button();
             this.NumberOfFramesNumeric = new System.Windows.Forms.NumericUpDown();
             this.NumberOfFramesLabel = new System.Windows.Forms.Label();
@@ -47,6 +48,19 @@
             this.MovieNumberLabel = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Run = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Left = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Right = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.LMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.RMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Crouch = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Inventory = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tests = new System.Windows.Forms.TabPage();
             this.performanceText = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,20 +72,10 @@
             this.LaunchRunLabel = new System.Windows.Forms.Label();
             this.penumbraTimeText = new System.Windows.Forms.Label();
             this.LaunchRun = new System.Windows.Forms.Button();
-            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Inventory = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Crouch = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.RMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.LMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Right = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Left = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Run = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LoadingLabel = new System.Windows.Forms.Label();
+            this.AboutTab = new System.Windows.Forms.TabPage();
+            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.License = new System.Windows.Forms.Label();
+            this.MadeByKappa = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.Settings.SuspendLayout();
             this.MovieEditor.SuspendLayout();
@@ -80,6 +84,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tests.SuspendLayout();
+            this.AboutTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Label1
@@ -96,6 +102,7 @@
             this.tabControl.Controls.Add(this.Settings);
             this.tabControl.Controls.Add(this.MovieEditor);
             this.tabControl.Controls.Add(this.tests);
+            this.tabControl.Controls.Add(this.AboutTab);
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -155,6 +162,16 @@
             this.MovieEditor.TabIndex = 1;
             this.MovieEditor.Text = "Movie Editor";
             this.MovieEditor.UseVisualStyleBackColor = true;
+            // 
+            // LoadingLabel
+            // 
+            this.LoadingLabel.AutoSize = true;
+            this.LoadingLabel.Location = new System.Drawing.Point(249, 21);
+            this.LoadingLabel.Name = "LoadingLabel";
+            this.LoadingLabel.Size = new System.Drawing.Size(54, 13);
+            this.LoadingLabel.TabIndex = 12;
+            this.LoadingLabel.Text = "Loading...";
+            this.LoadingLabel.Visible = false;
             // 
             // ChangeNumberOfFramesButton
             // 
@@ -299,6 +316,163 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
+            // FrameNumber
+            // 
+            this.FrameNumber.FillWeight = 55F;
+            this.FrameNumber.Frozen = true;
+            this.FrameNumber.HeaderText = "Frame n°";
+            this.FrameNumber.Name = "FrameNumber";
+            this.FrameNumber.ReadOnly = true;
+            this.FrameNumber.Width = 55;
+            // 
+            // Run
+            // 
+            this.Run.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Run.Frozen = true;
+            this.Run.HeaderText = "Run";
+            this.Run.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Run.MinimumWidth = 55;
+            this.Run.Name = "Run";
+            this.Run.Width = 55;
+            // 
+            // Forwards
+            // 
+            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Forwards.FillWeight = 65F;
+            this.Forwards.Frozen = true;
+            this.Forwards.HeaderText = "Forwards";
+            this.Forwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Forwards.Name = "Forwards";
+            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Forwards.Width = 56;
+            // 
+            // Backwards
+            // 
+            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Backwards.FillWeight = 75F;
+            this.Backwards.Frozen = true;
+            this.Backwards.HeaderText = "Backwards";
+            this.Backwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Backwards.Name = "Backwards";
+            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Backwards.Width = 66;
+            // 
+            // Left
+            // 
+            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Left.FillWeight = 50F;
+            this.Left.Frozen = true;
+            this.Left.HeaderText = "Left";
+            this.Left.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Left.MinimumWidth = 55;
+            this.Left.Name = "Left";
+            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Left.Width = 55;
+            // 
+            // Right
+            // 
+            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Right.Frozen = true;
+            this.Right.HeaderText = "Right";
+            this.Right.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Right.MinimumWidth = 55;
+            this.Right.Name = "Right";
+            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Right.Width = 55;
+            // 
+            // LMB
+            // 
+            this.LMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.LMB.Frozen = true;
+            this.LMB.HeaderText = "LMB";
+            this.LMB.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.LMB.MinimumWidth = 55;
+            this.LMB.Name = "LMB";
+            this.LMB.Width = 55;
+            // 
+            // RMB
+            // 
+            this.RMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.RMB.Frozen = true;
+            this.RMB.HeaderText = "RMB";
+            this.RMB.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.RMB.MinimumWidth = 55;
+            this.RMB.Name = "RMB";
+            this.RMB.Width = 55;
+            // 
+            // Crouch
+            // 
+            this.Crouch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Crouch.Frozen = true;
+            this.Crouch.HeaderText = "Crouch";
+            this.Crouch.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Crouch.MinimumWidth = 55;
+            this.Crouch.Name = "Crouch";
+            this.Crouch.Width = 55;
+            // 
+            // Inventory
+            // 
+            this.Inventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Inventory.Frozen = true;
+            this.Inventory.HeaderText = "Inventory";
+            this.Inventory.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Inventory.MinimumWidth = 55;
+            this.Inventory.Name = "Inventory";
+            this.Inventory.Width = 57;
+            // 
+            // MouseX
+            // 
+            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseX.Frozen = true;
+            this.MouseX.HeaderText = "MouseX";
+            this.MouseX.Name = "MouseX";
+            this.MouseX.Width = 71;
+            // 
+            // MouseY
+            // 
+            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseY.Frozen = true;
+            this.MouseY.HeaderText = "MouseY";
+            this.MouseY.Name = "MouseY";
+            this.MouseY.Width = 71;
+            // 
+            // Comments
+            // 
+            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Comments.Frozen = true;
+            this.Comments.HeaderText = "Comments";
+            this.Comments.MinimumWidth = 130;
+            this.Comments.Name = "Comments";
+            this.Comments.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Comments.Width = 130;
+            // 
             // tests
             // 
             this.tests.Controls.Add(this.performanceText);
@@ -415,172 +589,46 @@
             this.LaunchRun.UseVisualStyleBackColor = true;
             this.LaunchRun.Click += new System.EventHandler(this.GetTime_Click);
             // 
-            // Comments
+            // AboutTab
             // 
-            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Comments.Frozen = true;
-            this.Comments.HeaderText = "Comments";
-            this.Comments.MinimumWidth = 130;
-            this.Comments.Name = "Comments";
-            this.Comments.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Comments.Width = 130;
+            this.AboutTab.Controls.Add(this.PictureBox1);
+            this.AboutTab.Controls.Add(this.License);
+            this.AboutTab.Controls.Add(this.MadeByKappa);
+            this.AboutTab.Location = new System.Drawing.Point(4, 22);
+            this.AboutTab.Name = "AboutTab";
+            this.AboutTab.Padding = new System.Windows.Forms.Padding(3);
+            this.AboutTab.Size = new System.Drawing.Size(936, 476);
+            this.AboutTab.TabIndex = 3;
+            this.AboutTab.Text = "About";
+            this.AboutTab.UseVisualStyleBackColor = true;
             // 
-            // MouseY
+            // PictureBox1
             // 
-            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseY.Frozen = true;
-            this.MouseY.HeaderText = "MouseY";
-            this.MouseY.Name = "MouseY";
-            this.MouseY.Width = 71;
+            this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
+            this.PictureBox1.Location = new System.Drawing.Point(845, 401);
+            this.PictureBox1.Name = "PictureBox1";
+            this.PictureBox1.Size = new System.Drawing.Size(91, 75);
+            this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox1.TabIndex = 2;
+            this.PictureBox1.TabStop = false;
             // 
-            // MouseX
+            // License
             // 
-            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseX.Frozen = true;
-            this.MouseX.HeaderText = "MouseX";
-            this.MouseX.Name = "MouseX";
-            this.MouseX.Width = 71;
+            this.License.AutoSize = true;
+            this.License.Location = new System.Drawing.Point(8, 197);
+            this.License.Name = "License";
+            this.License.Size = new System.Drawing.Size(500, 273);
+            this.License.TabIndex = 1;
+            this.License.Text = resources.GetString("License.Text");
             // 
-            // Inventory
+            // MadeByKappa
             // 
-            this.Inventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Inventory.Frozen = true;
-            this.Inventory.HeaderText = "Inventory";
-            this.Inventory.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Inventory.MinimumWidth = 55;
-            this.Inventory.Name = "Inventory";
-            this.Inventory.Width = 57;
-            // 
-            // Crouch
-            // 
-            this.Crouch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Crouch.Frozen = true;
-            this.Crouch.HeaderText = "Crouch";
-            this.Crouch.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Crouch.MinimumWidth = 55;
-            this.Crouch.Name = "Crouch";
-            this.Crouch.Width = 55;
-            // 
-            // RMB
-            // 
-            this.RMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.RMB.Frozen = true;
-            this.RMB.HeaderText = "RMB";
-            this.RMB.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.RMB.MinimumWidth = 55;
-            this.RMB.Name = "RMB";
-            this.RMB.Width = 55;
-            // 
-            // LMB
-            // 
-            this.LMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.LMB.Frozen = true;
-            this.LMB.HeaderText = "LMB";
-            this.LMB.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.LMB.MinimumWidth = 55;
-            this.LMB.Name = "LMB";
-            this.LMB.Width = 55;
-            // 
-            // Right
-            // 
-            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Right.Frozen = true;
-            this.Right.HeaderText = "Right";
-            this.Right.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Right.MinimumWidth = 55;
-            this.Right.Name = "Right";
-            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Right.Width = 55;
-            // 
-            // Left
-            // 
-            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Left.FillWeight = 50F;
-            this.Left.Frozen = true;
-            this.Left.HeaderText = "Left";
-            this.Left.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Left.MinimumWidth = 55;
-            this.Left.Name = "Left";
-            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Left.Width = 55;
-            // 
-            // Backwards
-            // 
-            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Backwards.FillWeight = 75F;
-            this.Backwards.Frozen = true;
-            this.Backwards.HeaderText = "Backwards";
-            this.Backwards.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Backwards.Name = "Backwards";
-            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Backwards.Width = 66;
-            // 
-            // Forwards
-            // 
-            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Forwards.FillWeight = 65F;
-            this.Forwards.Frozen = true;
-            this.Forwards.HeaderText = "Forwards";
-            this.Forwards.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Forwards.Name = "Forwards";
-            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Forwards.Width = 56;
-            // 
-            // Run
-            // 
-            this.Run.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Run.Frozen = true;
-            this.Run.HeaderText = "Run";
-            this.Run.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Run.MinimumWidth = 55;
-            this.Run.Name = "Run";
-            this.Run.Width = 55;
-            // 
-            // FrameNumber
-            // 
-            this.FrameNumber.FillWeight = 55F;
-            this.FrameNumber.Frozen = true;
-            this.FrameNumber.HeaderText = "Frame n°";
-            this.FrameNumber.Name = "FrameNumber";
-            this.FrameNumber.ReadOnly = true;
-            this.FrameNumber.Width = 55;
-            // 
-            // LoadingLabel
-            // 
-            this.LoadingLabel.AutoSize = true;
-            this.LoadingLabel.Location = new System.Drawing.Point(249, 21);
-            this.LoadingLabel.Name = "LoadingLabel";
-            this.LoadingLabel.Size = new System.Drawing.Size(54, 13);
-            this.LoadingLabel.TabIndex = 12;
-            this.LoadingLabel.Text = "Loading...";
-            this.LoadingLabel.Visible = false;
+            this.MadeByKappa.AutoSize = true;
+            this.MadeByKappa.Location = new System.Drawing.Point(679, 457);
+            this.MadeByKappa.Name = "MadeByKappa";
+            this.MadeByKappa.Size = new System.Drawing.Size(160, 13);
+            this.MadeByKappa.TabIndex = 0;
+            this.MadeByKappa.Text = "Made by Kappawaii with love ❤️";
             // 
             // AppGUI
             // 
@@ -589,6 +637,7 @@
             this.ClientSize = new System.Drawing.Size(944, 501);
             this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(960, 540);
             this.Name = "AppGUI";
             this.Text = "TASumbra";
             this.Load += new System.EventHandler(this.App_Load);
@@ -603,6 +652,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tests.ResumeLayout(false);
             this.tests.PerformLayout();
+            this.AboutTab.ResumeLayout(false);
+            this.AboutTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -652,5 +704,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MouseY;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comments;
         private System.Windows.Forms.Label LoadingLabel;
+        private System.Windows.Forms.TabPage AboutTab;
+        private System.Windows.Forms.Label License;
+        private System.Windows.Forms.Label MadeByKappa;
+        private System.Windows.Forms.PictureBox PictureBox1;
     }
 }
