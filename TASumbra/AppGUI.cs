@@ -2,7 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Threading;
+using System.IO.Compression;
 using System.Windows.Forms;
 
 namespace TASumbra
@@ -38,16 +38,19 @@ namespace TASumbra
             dt.Columns.Add("Inventory");
             dt.Columns.Add("MouseX", Type.GetType("System.Int32"));
             dt.Columns.Add("MouseY", Type.GetType("System.Int32"));
+            dt.Columns.Add("Comments");
             try
             {
                 LoadMovie_Click(null, null);
             }
             catch (FileNotFoundException)
             {
-                for (int i = 0; i < 600; i++)
+                /* random filling of gridview
+                Random rand = new Random();
+                for (int i = 0; i < 46800; i++)
                 {
-                    dt.Rows.Add();
-                }
+                    dt.Rows.Add("1","Down","Up","Down", "Down", "Up", "Down", "Down", "Up", "Down", 0, 1, "Down");
+                }*/
             }
         }
 
@@ -62,6 +65,11 @@ namespace TASumbra
 
         private void ApplyDataGridViewStyle()
         {
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 col.DataPropertyName = col.Name;
@@ -98,7 +106,7 @@ namespace TASumbra
         {
             // = DataGridViewComboBoxDisplayStyle.Nothing
             DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            Console.WriteLine(cell.Value.ToString());
+            //Console.WriteLine(cell.Value.ToString());
             DataGridViewCellStyle cellColor = cell.Style;
             if (cell.Value == DBNull.Value)
             {
@@ -217,14 +225,13 @@ namespace TASumbra
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            ComboBox ctrl = e.Control as ComboBox;
-            if (ctrl != null)
+            if (e.Control is ComboBox ctrl)
             {
-                ctrl.Enter -= new EventHandler(ctrl_Enter);
-                ctrl.Enter += new EventHandler(ctrl_Enter);
+                ctrl.Enter -= new EventHandler(Ctrl_Enter);
+                ctrl.Enter += new EventHandler(Ctrl_Enter);
             }
         }
-        void ctrl_Enter(object sender, EventArgs e)
+        void Ctrl_Enter(object sender, EventArgs e)
         {
             (sender as ComboBox).DroppedDown = true;
         }
@@ -270,13 +277,37 @@ namespace TASumbra
 
         private void SaveMovie_Click(object sender, EventArgs e)
         {
-            dt.WriteXml("movies/movie.xml");
+            string tempfolder = @".\movies\temp";
+            string tempXmlPath = @".\movies\temp\movie.xml";
+            string xmlPath = @".\movies\movie.xml";
+            string zipPath = @".\movies\movie.zip";
+            Directory.CreateDirectory(tempfolder);
+            dt.WriteXml(tempXmlPath);
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+            ZipFile.CreateFromDirectory(tempfolder, zipPath);
+            File.Copy(tempXmlPath, xmlPath, true);
+            File.Delete(tempXmlPath);
+            Directory.Delete(tempfolder);
         }
 
         private void LoadMovie_Click(object sender, EventArgs e)
         {
+            LoadingLabel.Visible = true;
             dt.Clear();
-            dt.ReadXml("movies/movie.xml");
+            try
+            {
+                dt.ReadXml("movies/movie.xml");
+            }
+            catch (Exception)
+            {
+                LoadingLabel.Visible = false;
+                throw;
+            }
+            LoadingLabel.Visible = false;
+            NumberOfFramesNumeric.Value = dt.Rows.Count;
         }
 
         private void GoToRow_Click(object sender, EventArgs e)
@@ -286,21 +317,27 @@ namespace TASumbra
 
         private void ChangeNumberOfFramesButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(NumberOfFramesNumeric.Value);
-            Console.WriteLine(dt.Rows.Count);
+            //dataGridView1.VirtualMode = true;
+            //Console.WriteLine(NumberOfFramesNumeric.Value);
+            //Console.WriteLine(dt.Rows.Count);
             int numericValue = (int)NumberOfFramesNumeric.Value;
             if (numericValue > dt.Rows.Count)
             {
                 int rowsToAdd = numericValue - dt.Rows.Count;
                 for (int i = 0; i < rowsToAdd; i++)
                 {
+                    dt.BeginLoadData();
                     dt.Rows.Add();
+                    dt.EndLoadData();
                 }
             }
             while (numericValue < dt.Rows.Count)
             {
+                dt.BeginLoadData();
                 dt.Rows.RemoveAt(dt.Rows.Count - 1);
+                dt.EndLoadData();
             }
+            //dataGridView1.VirtualMode = false;
         }
     }
 }

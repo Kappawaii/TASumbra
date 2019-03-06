@@ -58,18 +58,20 @@
             this.LaunchRunLabel = new System.Windows.Forms.Label();
             this.penumbraTimeText = new System.Windows.Forms.Label();
             this.LaunchRun = new System.Windows.Forms.Button();
-            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Run = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Left = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Right = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.LMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.RMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Crouch = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Inventory = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Inventory = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Crouch = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.RMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.LMB = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Right = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Left = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Run = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoadingLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.Settings.SuspendLayout();
             this.MovieEditor.SuspendLayout();
@@ -133,6 +135,7 @@
             // 
             // MovieEditor
             // 
+            this.MovieEditor.Controls.Add(this.LoadingLabel);
             this.MovieEditor.Controls.Add(this.ChangeNumberOfFramesButton);
             this.MovieEditor.Controls.Add(this.NumberOfFramesNumeric);
             this.MovieEditor.Controls.Add(this.NumberOfFramesLabel);
@@ -155,7 +158,7 @@
             // 
             // ChangeNumberOfFramesButton
             // 
-            this.ChangeNumberOfFramesButton.Location = new System.Drawing.Point(715, 196);
+            this.ChangeNumberOfFramesButton.Location = new System.Drawing.Point(832, 196);
             this.ChangeNumberOfFramesButton.Name = "ChangeNumberOfFramesButton";
             this.ChangeNumberOfFramesButton.Size = new System.Drawing.Size(87, 50);
             this.ChangeNumberOfFramesButton.TabIndex = 11;
@@ -165,7 +168,7 @@
             // 
             // NumberOfFramesNumeric
             // 
-            this.NumberOfFramesNumeric.Location = new System.Drawing.Point(726, 170);
+            this.NumberOfFramesNumeric.Location = new System.Drawing.Point(843, 170);
             this.NumberOfFramesNumeric.Maximum = new decimal(new int[] {
             128000,
             0,
@@ -178,7 +181,7 @@
             // NumberOfFramesLabel
             // 
             this.NumberOfFramesLabel.AutoSize = true;
-            this.NumberOfFramesLabel.Location = new System.Drawing.Point(715, 154);
+            this.NumberOfFramesLabel.Location = new System.Drawing.Point(832, 154);
             this.NumberOfFramesLabel.Name = "NumberOfFramesLabel";
             this.NumberOfFramesLabel.Size = new System.Drawing.Size(80, 13);
             this.NumberOfFramesLabel.TabIndex = 9;
@@ -198,7 +201,7 @@
             // 
             // GoToRow
             // 
-            this.GoToRow.Location = new System.Drawing.Point(715, 98);
+            this.GoToRow.Location = new System.Drawing.Point(832, 98);
             this.GoToRow.Name = "GoToRow";
             this.GoToRow.Size = new System.Drawing.Size(87, 23);
             this.GoToRow.TabIndex = 7;
@@ -209,7 +212,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(723, 56);
+            this.label5.Location = new System.Drawing.Point(840, 56);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(68, 13);
             this.label5.TabIndex = 6;
@@ -217,7 +220,7 @@
             // 
             // GoToRowNumeric
             // 
-            this.GoToRowNumeric.Location = new System.Drawing.Point(726, 72);
+            this.GoToRowNumeric.Location = new System.Drawing.Point(843, 72);
             this.GoToRowNumeric.Maximum = new decimal(new int[] {
             0,
             0,
@@ -284,17 +287,17 @@
             this.Crouch,
             this.Inventory,
             this.MouseX,
-            this.MouseY});
+            this.MouseY,
+            this.Comments});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 49);
+            this.dataGridView1.Location = new System.Drawing.Point(2, 49);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(710, 427);
+            this.dataGridView1.Size = new System.Drawing.Size(826, 427);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
-            this.dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             // 
             // tests
             // 
@@ -412,55 +415,97 @@
             this.LaunchRun.UseVisualStyleBackColor = true;
             this.LaunchRun.Click += new System.EventHandler(this.GetTime_Click);
             // 
-            // FrameNumber
+            // Comments
             // 
-            this.FrameNumber.FillWeight = 55F;
-            this.FrameNumber.Frozen = true;
-            this.FrameNumber.HeaderText = "Frame n°";
-            this.FrameNumber.Name = "FrameNumber";
-            this.FrameNumber.ReadOnly = true;
-            this.FrameNumber.Width = 55;
+            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Comments.Frozen = true;
+            this.Comments.HeaderText = "Comments";
+            this.Comments.MinimumWidth = 130;
+            this.Comments.Name = "Comments";
+            this.Comments.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Comments.Width = 130;
             // 
-            // Run
+            // MouseY
             // 
-            this.Run.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Run.Frozen = true;
-            this.Run.HeaderText = "Run";
-            this.Run.Items.AddRange(new object[] {
+            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseY.Frozen = true;
+            this.MouseY.HeaderText = "MouseY";
+            this.MouseY.Name = "MouseY";
+            this.MouseY.Width = 71;
+            // 
+            // MouseX
+            // 
+            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseX.Frozen = true;
+            this.MouseX.HeaderText = "MouseX";
+            this.MouseX.Name = "MouseX";
+            this.MouseX.Width = 71;
+            // 
+            // Inventory
+            // 
+            this.Inventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Inventory.Frozen = true;
+            this.Inventory.HeaderText = "Inventory";
+            this.Inventory.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.Run.MinimumWidth = 55;
-            this.Run.Name = "Run";
-            this.Run.Width = 55;
+            this.Inventory.MinimumWidth = 55;
+            this.Inventory.Name = "Inventory";
+            this.Inventory.Width = 57;
             // 
-            // Forwards
+            // Crouch
             // 
-            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Forwards.FillWeight = 65F;
-            this.Forwards.Frozen = true;
-            this.Forwards.HeaderText = "Forwards";
-            this.Forwards.Items.AddRange(new object[] {
+            this.Crouch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Crouch.Frozen = true;
+            this.Crouch.HeaderText = "Crouch";
+            this.Crouch.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.Forwards.Name = "Forwards";
-            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Forwards.Width = 56;
+            this.Crouch.MinimumWidth = 55;
+            this.Crouch.Name = "Crouch";
+            this.Crouch.Width = 55;
             // 
-            // Backwards
+            // RMB
             // 
-            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Backwards.FillWeight = 75F;
-            this.Backwards.Frozen = true;
-            this.Backwards.HeaderText = "Backwards";
-            this.Backwards.Items.AddRange(new object[] {
+            this.RMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.RMB.Frozen = true;
+            this.RMB.HeaderText = "RMB";
+            this.RMB.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.Backwards.Name = "Backwards";
-            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Backwards.Width = 66;
+            this.RMB.MinimumWidth = 55;
+            this.RMB.Name = "RMB";
+            this.RMB.Width = 55;
+            // 
+            // LMB
+            // 
+            this.LMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.LMB.Frozen = true;
+            this.LMB.HeaderText = "LMB";
+            this.LMB.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.LMB.MinimumWidth = 55;
+            this.LMB.Name = "LMB";
+            this.LMB.Width = 55;
+            // 
+            // Right
+            // 
+            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Right.Frozen = true;
+            this.Right.HeaderText = "Right";
+            this.Right.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Right.MinimumWidth = 55;
+            this.Right.Name = "Right";
+            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Right.Width = 55;
             // 
             // Left
             // 
@@ -477,87 +522,65 @@
             this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Left.Width = 55;
             // 
-            // Right
+            // Backwards
             // 
-            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Right.Frozen = true;
-            this.Right.HeaderText = "Right";
-            this.Right.Items.AddRange(new object[] {
+            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Backwards.FillWeight = 75F;
+            this.Backwards.Frozen = true;
+            this.Backwards.HeaderText = "Backwards";
+            this.Backwards.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.Right.MinimumWidth = 55;
-            this.Right.Name = "Right";
-            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Right.Width = 55;
+            this.Backwards.Name = "Backwards";
+            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Backwards.Width = 66;
             // 
-            // LMB
+            // Forwards
             // 
-            this.LMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.LMB.Frozen = true;
-            this.LMB.HeaderText = "LMB";
-            this.LMB.Items.AddRange(new object[] {
+            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Forwards.FillWeight = 65F;
+            this.Forwards.Frozen = true;
+            this.Forwards.HeaderText = "Forwards";
+            this.Forwards.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.LMB.MinimumWidth = 55;
-            this.LMB.Name = "LMB";
-            this.LMB.Width = 55;
+            this.Forwards.Name = "Forwards";
+            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Forwards.Width = 56;
             // 
-            // RMB
+            // Run
             // 
-            this.RMB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.RMB.Frozen = true;
-            this.RMB.HeaderText = "RMB";
-            this.RMB.Items.AddRange(new object[] {
+            this.Run.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Run.Frozen = true;
+            this.Run.HeaderText = "Run";
+            this.Run.Items.AddRange(new object[] {
             "Up",
             "Down",
             "/"});
-            this.RMB.MinimumWidth = 55;
-            this.RMB.Name = "RMB";
-            this.RMB.Width = 55;
+            this.Run.MinimumWidth = 55;
+            this.Run.Name = "Run";
+            this.Run.Width = 55;
             // 
-            // Crouch
+            // FrameNumber
             // 
-            this.Crouch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Crouch.Frozen = true;
-            this.Crouch.HeaderText = "Crouch";
-            this.Crouch.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Crouch.MinimumWidth = 55;
-            this.Crouch.Name = "Crouch";
-            this.Crouch.Width = 55;
+            this.FrameNumber.FillWeight = 55F;
+            this.FrameNumber.Frozen = true;
+            this.FrameNumber.HeaderText = "Frame n°";
+            this.FrameNumber.Name = "FrameNumber";
+            this.FrameNumber.ReadOnly = true;
+            this.FrameNumber.Width = 55;
             // 
-            // Inventory
+            // LoadingLabel
             // 
-            this.Inventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Inventory.Frozen = true;
-            this.Inventory.HeaderText = "Inventory";
-            this.Inventory.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Inventory.MinimumWidth = 55;
-            this.Inventory.Name = "Inventory";
-            this.Inventory.Width = 57;
-            // 
-            // MouseX
-            // 
-            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseX.Frozen = true;
-            this.MouseX.HeaderText = "MouseX";
-            this.MouseX.Name = "MouseX";
-            this.MouseX.Width = 71;
-            // 
-            // MouseY
-            // 
-            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseY.Frozen = true;
-            this.MouseY.HeaderText = "MouseY";
-            this.MouseY.Name = "MouseY";
-            this.MouseY.Width = 71;
+            this.LoadingLabel.AutoSize = true;
+            this.LoadingLabel.Location = new System.Drawing.Point(249, 21);
+            this.LoadingLabel.Name = "LoadingLabel";
+            this.LoadingLabel.Size = new System.Drawing.Size(54, 13);
+            this.LoadingLabel.TabIndex = 12;
+            this.LoadingLabel.Text = "Loading...";
+            this.LoadingLabel.Visible = false;
             // 
             // AppGUI
             // 
@@ -627,5 +650,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn Inventory;
         private System.Windows.Forms.DataGridViewTextBoxColumn MouseX;
         private System.Windows.Forms.DataGridViewTextBoxColumn MouseY;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Comments;
+        private System.Windows.Forms.Label LoadingLabel;
     }
 }
