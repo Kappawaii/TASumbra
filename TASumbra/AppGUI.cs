@@ -22,13 +22,31 @@ namespace TASumbra
         private void InitializeDataTable()
         {
             dt = new DataTable("TASumbra");
-            dt.TableNewRow += DataGridView1_RowsAdded;
+            //dt.RowChanged += DataTable_TableNewRow;
+            dt.RowChanged += DataTable_RowChanged;
             dt.Columns.Add("FrameNumber", Type.GetType("System.String"));
+            dt.Columns.Add("Shift");
             dt.Columns.Add("Forwards");
-            dt.Columns.Add("Nice");
+            dt.Columns.Add("Backwards");
+            dt.Columns.Add("Left");
+            dt.Columns.Add("Right");
+            dt.Columns.Add("LMB");
+            dt.Columns.Add("RMB");
             dt.Columns.Add("MouseX", Type.GetType("System.Int32"));
             dt.Columns.Add("MouseY", Type.GetType("System.Int32"));
-            dt.Rows.Add();
+            for (int i = 0; i < 100; i++)
+            {
+                dt.Rows.Add();
+            }
+        }
+
+        protected void DataTable_RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            GoToRowNumeric.Maximum = dt.Rows.Count;
+            if (e.Action == DataRowAction.Add)
+            {
+                DataTable_TableNewRow(sender, e.Row);
+            }
         }
 
         private void ApplyDataGridViewStyle()
@@ -62,28 +80,31 @@ namespace TASumbra
 
         }
 
-        private void DataGridView1_RowsAdded(object sender, DataTableNewRowEventArgs e)
+        private void DataTable_TableNewRow(object sender, DataRow row)
         {
-            int lastVal = 0;
-            if (e != null)
-            {
+            CheckValueOrAddDefault(row, "Shift", "/");
+            CheckValueOrAddDefault(row, "Forwards", "/");
+            CheckValueOrAddDefault(row, "Backwards", "/");
+            CheckValueOrAddDefault(row, "Left", "/");
+            CheckValueOrAddDefault(row, "Right", "/");
+            /*if (row["MouseX"].GetType() == typeof(DBNull))
+                row["MouseX"] = "/";
+            if (row["MouseY"].GetType() == typeof(DBNull))
+                row["MouseY"] = "/";*/
+            if (row["LMB"].GetType() == typeof(DBNull))
+                row["LMB"] = "/";
 
-                DataGridViewRow row = dataGridView1.Rows[dt.Rows.IndexOf(e.Row)];
-                /*if (row.Cells["FrameNumber"].Value != null)
-                {
-                    lastVal = int.Parse(row.Cells["FrameNumber"].Value.ToString());
-                }
-                else
-                {
-                    row.Cells["FrameNumber"].Value = ++lastVal;
-                }*/
-                row.Cells["MouseX"].Value = null;
-                row.Cells["MouseY"].Value = null;
-                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)row.Cells["Forwards"];
-                cell.Value = cell.Items[2];
-                //cell.ValueType = typeof(int);
+            if (row["FrameNumber"].GetType() == typeof(DBNull))
+                row["FrameNumber"] = dt.Rows.IndexOf(row) + 1;
 
-            }
+            //Console.WriteLine("Hello" + dt.Rows.IndexOf(row));
+            //cell.ValueType = typeof(int);
+        }
+
+        private void CheckValueOrAddDefault<T>(DataRow row, string columnName, T defaultVal)
+        {
+            if (row[columnName].GetType() == typeof(DBNull))
+                row[columnName] = defaultVal;
         }
 
         private void Label1_Click(object sender, EventArgs e)
@@ -151,15 +172,45 @@ namespace TASumbra
 
         }
 
+
+        private void NewMovie_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void SaveMovie_Click(object sender, EventArgs e)
         {
-            dt.WriteXml("movie.xml");
+            dt.WriteXml("movies/movie.xml");
         }
 
         private void LoadMovie_Click(object sender, EventArgs e)
         {
             dt.Clear();
-            dt.ReadXml("movie.xml");
+            dt.ReadXml("movies/movie.xml");
+        }
+
+        private void GoToRow_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.Rows[(int)GoToRowNumeric.Value-1].Cells[0];
+        }
+
+        private void ChangeNumberOfFramesButton_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(NumberOfFramesNumeric.Value);
+            Console.WriteLine(dt.Rows.Count);
+            int numericValue = (int)NumberOfFramesNumeric.Value;
+            if (numericValue > dt.Rows.Count)
+            {
+                int rowsToAdd = numericValue - dt.Rows.Count;
+                for (int i = 0; i < rowsToAdd; i++)
+                {
+                    dt.Rows.Add();
+                }
+            }
+            while(numericValue < dt.Rows.Count)
+            {
+                dt.Rows.RemoveAt(dt.Rows.Count - 1);
+            }
         }
     }
 }

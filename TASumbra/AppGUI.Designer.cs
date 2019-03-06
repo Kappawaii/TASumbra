@@ -35,11 +35,26 @@
             this.PenumbraPathSelect = new System.Windows.Forms.Button();
             this.PenumbraPathTextBox = new System.Windows.Forms.MaskedTextBox();
             this.MovieEditor = new System.Windows.Forms.TabPage();
-            this.Load_Movie = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ChangeNumberOfFramesButton = new System.Windows.Forms.Button();
+            this.NumberOfFramesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.NumberOfFramesLabel = new System.Windows.Forms.Label();
+            this.NewMovieButton = new System.Windows.Forms.Button();
+            this.GoToRow = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.GoToRowNumeric = new System.Windows.Forms.NumericUpDown();
+            this.LoadMovieButton = new System.Windows.Forms.Button();
+            this.SaveMovieButton = new System.Windows.Forms.Button();
             this.MovieNumberLabel = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Shift = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Left = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Right = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tests = new System.Windows.Forms.TabPage();
             this.performanceText = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,16 +66,11 @@
             this.LaunchRunLabel = new System.Windows.Forms.Label();
             this.penumbraTimeText = new System.Windows.Forms.Label();
             this.LaunchRun = new System.Windows.Forms.Button();
-            this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Forwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Backwards = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Left = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Right = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MouseX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl.SuspendLayout();
             this.Settings.SuspendLayout();
             this.MovieEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumberOfFramesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GoToRowNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tests.SuspendLayout();
@@ -121,8 +131,15 @@
             // 
             // MovieEditor
             // 
-            this.MovieEditor.Controls.Add(this.Load_Movie);
-            this.MovieEditor.Controls.Add(this.button1);
+            this.MovieEditor.Controls.Add(this.ChangeNumberOfFramesButton);
+            this.MovieEditor.Controls.Add(this.NumberOfFramesNumeric);
+            this.MovieEditor.Controls.Add(this.NumberOfFramesLabel);
+            this.MovieEditor.Controls.Add(this.NewMovieButton);
+            this.MovieEditor.Controls.Add(this.GoToRow);
+            this.MovieEditor.Controls.Add(this.label5);
+            this.MovieEditor.Controls.Add(this.GoToRowNumeric);
+            this.MovieEditor.Controls.Add(this.LoadMovieButton);
+            this.MovieEditor.Controls.Add(this.SaveMovieButton);
             this.MovieEditor.Controls.Add(this.MovieNumberLabel);
             this.MovieEditor.Controls.Add(this.numericUpDown1);
             this.MovieEditor.Controls.Add(this.dataGridView1);
@@ -134,41 +151,116 @@
             this.MovieEditor.Text = "Movie Editor";
             this.MovieEditor.UseVisualStyleBackColor = true;
             // 
-            // Load_Movie
+            // ChangeNumberOfFramesButton
             // 
-            this.Load_Movie.Location = new System.Drawing.Point(215, 20);
-            this.Load_Movie.Name = "Load_Movie";
-            this.Load_Movie.Size = new System.Drawing.Size(75, 23);
-            this.Load_Movie.TabIndex = 4;
-            this.Load_Movie.Text = "Load Movie";
-            this.Load_Movie.UseVisualStyleBackColor = true;
-            this.Load_Movie.Click += new System.EventHandler(this.LoadMovie_Click);
+            this.ChangeNumberOfFramesButton.Location = new System.Drawing.Point(550, 189);
+            this.ChangeNumberOfFramesButton.Name = "ChangeNumberOfFramesButton";
+            this.ChangeNumberOfFramesButton.Size = new System.Drawing.Size(87, 50);
+            this.ChangeNumberOfFramesButton.TabIndex = 11;
+            this.ChangeNumberOfFramesButton.Text = "Change number of lines";
+            this.ChangeNumberOfFramesButton.UseVisualStyleBackColor = true;
+            this.ChangeNumberOfFramesButton.Click += new System.EventHandler(this.ChangeNumberOfFramesButton_Click);
             // 
-            // button1
+            // NumberOfFramesNumeric
             // 
-            this.button1.Location = new System.Drawing.Point(296, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Save Movie";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.SaveMovie_Click);
+            this.NumberOfFramesNumeric.Location = new System.Drawing.Point(561, 163);
+            this.NumberOfFramesNumeric.Maximum = new decimal(new int[] {
+            128000,
+            0,
+            0,
+            0});
+            this.NumberOfFramesNumeric.Name = "NumberOfFramesNumeric";
+            this.NumberOfFramesNumeric.Size = new System.Drawing.Size(61, 20);
+            this.NumberOfFramesNumeric.TabIndex = 10;
+            // 
+            // NumberOfFramesLabel
+            // 
+            this.NumberOfFramesLabel.AutoSize = true;
+            this.NumberOfFramesLabel.Location = new System.Drawing.Point(550, 147);
+            this.NumberOfFramesLabel.Name = "NumberOfFramesLabel";
+            this.NumberOfFramesLabel.Size = new System.Drawing.Size(80, 13);
+            this.NumberOfFramesLabel.TabIndex = 9;
+            this.NumberOfFramesLabel.Text = "Movie number :";
+            this.NumberOfFramesLabel.Visible = false;
+            // 
+            // NewMovieButton
+            // 
+            this.NewMovieButton.Location = new System.Drawing.Point(6, 16);
+            this.NewMovieButton.Name = "NewMovieButton";
+            this.NewMovieButton.Size = new System.Drawing.Size(75, 23);
+            this.NewMovieButton.TabIndex = 8;
+            this.NewMovieButton.Text = "New Movie";
+            this.NewMovieButton.UseVisualStyleBackColor = true;
+            this.NewMovieButton.Click += new System.EventHandler(this.NewMovie_Click);
+            // 
+            // GoToRow
+            // 
+            this.GoToRow.Location = new System.Drawing.Point(550, 91);
+            this.GoToRow.Name = "GoToRow";
+            this.GoToRow.Size = new System.Drawing.Size(87, 23);
+            this.GoToRow.TabIndex = 7;
+            this.GoToRow.Text = "Go";
+            this.GoToRow.UseVisualStyleBackColor = true;
+            this.GoToRow.Click += new System.EventHandler(this.GoToRow_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(558, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Go to frame :";
+            // 
+            // GoToRowNumeric
+            // 
+            this.GoToRowNumeric.Location = new System.Drawing.Point(561, 65);
+            this.GoToRowNumeric.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.GoToRowNumeric.Name = "GoToRowNumeric";
+            this.GoToRowNumeric.Size = new System.Drawing.Size(61, 20);
+            this.GoToRowNumeric.TabIndex = 5;
+            // 
+            // LoadMovieButton
+            // 
+            this.LoadMovieButton.Location = new System.Drawing.Point(87, 16);
+            this.LoadMovieButton.Name = "LoadMovieButton";
+            this.LoadMovieButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadMovieButton.TabIndex = 4;
+            this.LoadMovieButton.Text = "Load Movie";
+            this.LoadMovieButton.UseVisualStyleBackColor = true;
+            this.LoadMovieButton.Click += new System.EventHandler(this.LoadMovie_Click);
+            // 
+            // SaveMovieButton
+            // 
+            this.SaveMovieButton.Location = new System.Drawing.Point(168, 16);
+            this.SaveMovieButton.Name = "SaveMovieButton";
+            this.SaveMovieButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveMovieButton.TabIndex = 3;
+            this.SaveMovieButton.Text = "Save Movie";
+            this.SaveMovieButton.UseVisualStyleBackColor = true;
+            this.SaveMovieButton.Click += new System.EventHandler(this.SaveMovie_Click);
             // 
             // MovieNumberLabel
             // 
             this.MovieNumberLabel.AutoSize = true;
-            this.MovieNumberLabel.Location = new System.Drawing.Point(400, 26);
+            this.MovieNumberLabel.Location = new System.Drawing.Point(370, 21);
             this.MovieNumberLabel.Name = "MovieNumberLabel";
             this.MovieNumberLabel.Size = new System.Drawing.Size(80, 13);
             this.MovieNumberLabel.TabIndex = 2;
             this.MovieNumberLabel.Text = "Movie number :";
+            this.MovieNumberLabel.Visible = false;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(483, 23);
+            this.numericUpDown1.Location = new System.Drawing.Point(456, 19);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
             this.numericUpDown1.TabIndex = 1;
+            this.numericUpDown1.Visible = false;
             // 
             // dataGridView1
             // 
@@ -179,6 +271,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FrameNumber,
+            this.Shift,
             this.Forwards,
             this.Backwards,
             this.Left,
@@ -194,6 +287,100 @@
             this.dataGridView1.Size = new System.Drawing.Size(544, 427);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
+            // 
+            // FrameNumber
+            // 
+            this.FrameNumber.FillWeight = 55F;
+            this.FrameNumber.Frozen = true;
+            this.FrameNumber.HeaderText = "Frame n°";
+            this.FrameNumber.Name = "FrameNumber";
+            this.FrameNumber.ReadOnly = true;
+            this.FrameNumber.Width = 55;
+            // 
+            // Shift
+            // 
+            this.Shift.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Shift.Frozen = true;
+            this.Shift.HeaderText = "Shift";
+            this.Shift.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Shift.Name = "Shift";
+            this.Shift.Width = 34;
+            // 
+            // Forwards
+            // 
+            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Forwards.FillWeight = 65F;
+            this.Forwards.Frozen = true;
+            this.Forwards.HeaderText = "Forwards";
+            this.Forwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Forwards.Name = "Forwards";
+            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Forwards.Width = 56;
+            // 
+            // Backwards
+            // 
+            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Backwards.FillWeight = 75F;
+            this.Backwards.Frozen = true;
+            this.Backwards.HeaderText = "Backwards";
+            this.Backwards.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Backwards.Name = "Backwards";
+            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Backwards.Width = 66;
+            // 
+            // Left
+            // 
+            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Left.FillWeight = 50F;
+            this.Left.Frozen = true;
+            this.Left.HeaderText = "Left";
+            this.Left.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Left.MinimumWidth = 42;
+            this.Left.Name = "Left";
+            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Left.Width = 42;
+            // 
+            // Right
+            // 
+            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Right.Frozen = true;
+            this.Right.HeaderText = "Right";
+            this.Right.Items.AddRange(new object[] {
+            "Up",
+            "Down",
+            "/"});
+            this.Right.MinimumWidth = 42;
+            this.Right.Name = "Right";
+            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Right.Width = 42;
+            // 
+            // MouseX
+            // 
+            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseX.Frozen = true;
+            this.MouseX.HeaderText = "MouseX";
+            this.MouseX.Name = "MouseX";
+            this.MouseX.Width = 71;
+            // 
+            // MouseY
+            // 
+            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.MouseY.Frozen = true;
+            this.MouseY.HeaderText = "MouseY";
+            this.MouseY.Name = "MouseY";
+            this.MouseY.Width = 71;
             // 
             // tests
             // 
@@ -311,77 +498,6 @@
             this.LaunchRun.UseVisualStyleBackColor = true;
             this.LaunchRun.Click += new System.EventHandler(this.GetTime_Click);
             // 
-            // FrameNumber
-            // 
-            this.FrameNumber.FillWeight = 55F;
-            this.FrameNumber.Frozen = true;
-            this.FrameNumber.HeaderText = "Frame n°";
-            this.FrameNumber.Name = "FrameNumber";
-            this.FrameNumber.Width = 55;
-            // 
-            // Forwards
-            // 
-            this.Forwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Forwards.FillWeight = 65F;
-            this.Forwards.Frozen = true;
-            this.Forwards.HeaderText = "Forwards";
-            this.Forwards.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Forwards.Name = "Forwards";
-            this.Forwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Forwards.Width = 56;
-            // 
-            // Backwards
-            // 
-            this.Backwards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Backwards.FillWeight = 75F;
-            this.Backwards.Frozen = true;
-            this.Backwards.HeaderText = "Backwards";
-            this.Backwards.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "/"});
-            this.Backwards.Name = "Backwards";
-            this.Backwards.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Backwards.Width = 66;
-            // 
-            // Left
-            // 
-            this.Left.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Left.FillWeight = 50F;
-            this.Left.Frozen = true;
-            this.Left.HeaderText = "Left";
-            this.Left.Name = "Left";
-            this.Left.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Left.Width = 31;
-            // 
-            // Right
-            // 
-            this.Right.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Right.Frozen = true;
-            this.Right.HeaderText = "Right";
-            this.Right.Name = "Right";
-            this.Right.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Right.Width = 38;
-            // 
-            // MouseX
-            // 
-            this.MouseX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseX.Frozen = true;
-            this.MouseX.HeaderText = "MouseX";
-            this.MouseX.Name = "MouseX";
-            this.MouseX.Width = 71;
-            // 
-            // MouseY
-            // 
-            this.MouseY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.MouseY.Frozen = true;
-            this.MouseY.HeaderText = "MouseY";
-            this.MouseY.Name = "MouseY";
-            this.MouseY.Width = 71;
-            // 
             // AppGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -397,6 +513,8 @@
             this.Settings.PerformLayout();
             this.MovieEditor.ResumeLayout(false);
             this.MovieEditor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumberOfFramesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GoToRowNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tests.ResumeLayout(false);
@@ -427,14 +545,22 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label performanceText;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button Load_Movie;
+        private System.Windows.Forms.Button SaveMovieButton;
+        private System.Windows.Forms.Button LoadMovieButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn FrameNumber;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Shift;
         private System.Windows.Forms.DataGridViewComboBoxColumn Forwards;
         private System.Windows.Forms.DataGridViewComboBoxColumn Backwards;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Left;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Right;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Left;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Right;
         private System.Windows.Forms.DataGridViewTextBoxColumn MouseX;
         private System.Windows.Forms.DataGridViewTextBoxColumn MouseY;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown GoToRowNumeric;
+        private System.Windows.Forms.Button GoToRow;
+        private System.Windows.Forms.Button NewMovieButton;
+        private System.Windows.Forms.Button ChangeNumberOfFramesButton;
+        private System.Windows.Forms.NumericUpDown NumberOfFramesNumeric;
+        private System.Windows.Forms.Label NumberOfFramesLabel;
     }
 }
