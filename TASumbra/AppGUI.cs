@@ -71,7 +71,7 @@ namespace TASumbra
             dataGridView1.CellEndEdit += OnCellEndEdit;
             dataGridView1.CellFormatting += CellFormatting;
             dataGridView1.CellBeginEdit += OnCellEnterEdit;
-            //DataGridViewComboBoxColumn column = (DataGridViewComboBoxColumn)dataGridView1.Columns["Forwards"];
+            //TODO: add color between Down -> Up and for mouse input
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
                 if (column is DataGridViewComboBoxColumn)
