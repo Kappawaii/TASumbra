@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace TASumbra
@@ -13,8 +16,7 @@ namespace TASumbra
     }
     public partial class AppGUI : Form
     {
-        bool runStarted = false;
-
+        RunLauncher runLauncher;
         DataTable dt;
 
         public AppGUI()
@@ -37,6 +39,7 @@ namespace TASumbra
             dt.RowChanged += DataTable_RowChanged;
             dt.Columns.Add("FrameNumber", Type.GetType("System.String"));
             dt.Columns.Add("Run");
+            dt.Columns.Add("Jump");
             dt.Columns.Add("Forwards");
             dt.Columns.Add("Backwards");
             dt.Columns.Add("Left");
@@ -48,19 +51,7 @@ namespace TASumbra
             dt.Columns.Add("MouseX", Type.GetType("System.Int32"));
             dt.Columns.Add("MouseY", Type.GetType("System.Int32"));
             dt.Columns.Add("Comments");
-            try
-            {
-                LoadMovie_Click(null, null);
-            }
-            catch (FileNotFoundException)
-            {
-                /* random filling of gridview
-                Random rand = new Random();
-                for (int i = 0; i < 46800; i++)
-                {
-                    dt.Rows.Add("1","Down","Up","Down", "Down", "Up", "Down", "Down", "Up", "Down", 0, 1, "Down");
-                }*/
-            }
+
         }
 
         protected void DataTable_RowChanged(object sender, DataRowChangeEventArgs e)
@@ -78,7 +69,7 @@ namespace TASumbra
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
-            
+
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 col.DataPropertyName = col.Name;
@@ -158,11 +149,25 @@ namespace TASumbra
             }
 
         }
-
+        private void App_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadMovie_Click(null, null);
+            }
+            catch (FileNotFoundException)
+            {
+                /* random filling of gridview
+                Random rand = new Random();
+                for (int i = 0; i < 46800; i++)
+                {
+                    dt.Rows.Add("1","Down","Up","Down", "Down", "Up", "Down", "Down", "Up", "Down", 0, 1, "Down");
+                }*/
+            }
+        }
         private void App_Load(object sender, EventArgs e)
         {
             dataGridView1.AutoGenerateColumns = false;
-
             InitializeDataTable();
             dataGridView1.DataSource = dt;
             ApplyDataGridViewStyle();
@@ -183,6 +188,7 @@ namespace TASumbra
         private void DataTable_TableNewRow(object sender, DataRow row)
         {
             CheckValueOrAddDefault(row, "Run", "/");
+            CheckValueOrAddDefault(row, "Jump", "/");
             CheckValueOrAddDefault(row, "Forwards", "/");
             CheckValueOrAddDefault(row, "Backwards", "/");
             CheckValueOrAddDefault(row, "Left", "/");
@@ -191,6 +197,8 @@ namespace TASumbra
             CheckValueOrAddDefault(row, "RMB", "/");
             CheckValueOrAddDefault(row, "Crouch", "/");
             CheckValueOrAddDefault(row, "Inventory", "/");
+            CheckValueOrAddDefault(row, "MouseX", 0);
+            CheckValueOrAddDefault(row, "MouseY", 0);
             CheckValueOrAddDefault(row, "FrameNumber", dt.Rows.IndexOf(row) + 1);
 
 
@@ -250,14 +258,34 @@ namespace TASumbra
 
         }
 
-        private void GetTime_Click(object sender, EventArgs e)
+        private void LaunchRun_Click(object sender, EventArgs e)
         {
-            if (!runStarted)
+            //Console.WriteLine(dt.Rows.Count);
+            if (runLauncher == null)
             {
-                RunLauncher runLauncher = new RunLauncher(PenumbraPathTextBox.Text, penumbraTimeText, framesLabel, fpsLabel, performanceText);
+                RunLauncher_Start();
+            }
+            else
+            {
+                runLauncher.Destroy();
+                RunLauncher_Start();
+            }
+            /*else
+            {
+                MessageBox.Show("TAS already running", "FeelsBadMan");
+            }*/
+            //penumbraTimeText.Text = MemoryReader.ReadPenumbraMemory().ToString();
+        }
+
+        private void RunLauncher_Start()
+        {
+            runLauncher = new RunLauncher(dt, PenumbraPathTextBox.Text, penumbraTimeText, framesLabel, fpsLabel, performanceText,TimerDelayLabel);
+            if (!runLauncher.runStarted)
+            {
+
                 if (runLauncher.Start())
                 {
-                    runStarted = true;
+                    runLauncher.runStarted = true;
                 }
                 else
                 {
@@ -265,7 +293,6 @@ namespace TASumbra
                 }
 
             }
-            //penumbraTimeText.Text = MemoryReader.ReadPenumbraMemory().ToString();
         }
 
         private void GameTimeStaticLabel(object sender, EventArgs e)
@@ -316,7 +343,7 @@ namespace TASumbra
                 //throw;
             }
             //LoadingLabel.Visible = false;
-            NumberOfFramesNumeric.Value = dt.Rows.Count;
+            //NumberOfFramesNumeric.Value = dt.Rows.Count;
         }
 
         private void GoToRow_Click(object sender, EventArgs e)
@@ -326,27 +353,34 @@ namespace TASumbra
 
         private void ChangeNumberOfFramesButton_Click(object sender, EventArgs e)
         {
-            //dataGridView1.VirtualMode = true;
-            //Console.WriteLine(NumberOfFramesNumeric.Value);
-            //Console.WriteLine(dt.Rows.Count);
+            LoadingLabel.Visible = true;
+            Thread.Sleep(1000);
+            dt.BeginLoadData();
+            ((ISupportInitialize)dataGridView1).BeginInit();
+
             int numericValue = (int)NumberOfFramesNumeric.Value;
             if (numericValue > dt.Rows.Count)
             {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
                 int rowsToAdd = numericValue - dt.Rows.Count;
                 for (int i = 0; i < rowsToAdd; i++)
                 {
-                    dt.BeginLoadData();
                     dt.Rows.Add();
-                    dt.EndLoadData();
                 }
             }
             while (numericValue < dt.Rows.Count)
             {
-                dt.BeginLoadData();
                 dt.Rows.RemoveAt(dt.Rows.Count - 1);
-                dt.EndLoadData();
             }
-            //dataGridView1.VirtualMode = false;
+            dt.EndLoadData();
+            ((ISupportInitialize)dataGridView1).EndInit();
+            //NumberOfFramesNumeric.Maximum = dt.Rows.Count;
+            LoadingLabel.Visible = false;
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            Console.WriteLine(dt.Rows.Count);
         }
     }
 }

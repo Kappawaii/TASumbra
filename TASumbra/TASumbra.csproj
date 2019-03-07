@@ -79,6 +79,7 @@
     <Compile Include="AppGUI.Designer.cs">
       <DependentUpon>AppGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputManager.cs" />
     <Compile Include="MemoryReader.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

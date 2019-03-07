@@ -14,12 +14,28 @@ namespace TASumbra
         private const int clockOffset3 = 0x1C;
 
         int penumbraHandle;
+        Process process;
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll")]
+        private static extern IntPtr CloseProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        [DllImport("kernel32.dll")]
         private static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
+
+        public void Destroy()
+        {
+            try
+            {
+                CloseProcess(PROCESS_WM_READ, false, process.Id);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
 
         public bool InitPenumbraMemoryReader()
         {
@@ -28,7 +44,7 @@ namespace TASumbra
             {
                 return false;
             }
-            Process process = processes[0];
+            process = processes[0];
             penumbraHandle = (int)OpenProcess(PROCESS_WM_READ, false, process.Id);
             return true;
         }
@@ -41,7 +57,7 @@ namespace TASumbra
             //get first pointer addr
             ReadProcessMemory(penumbraHandle, 0x6DCAF0, buffer, buffer.Length, ref bytesRead);
             // follow pointer path with offsets (thanks Kotti)
-            ReadProcessMemory(penumbraHandle, BitConverter.ToInt32(buffer, 0) +0x188, buffer, buffer.Length, ref bytesRead);
+            ReadProcessMemory(penumbraHandle, BitConverter.ToInt32(buffer, 0) + 0x188, buffer, buffer.Length, ref bytesRead);
             ReadProcessMemory(penumbraHandle, BitConverter.ToInt32(buffer, 0) + 0x4C, buffer, buffer.Length, ref bytesRead);
             ReadProcessMemory(penumbraHandle, BitConverter.ToInt32(buffer, 0) + 0x1C, buffer, buffer.Length, ref bytesRead);
             return BitConverter.ToSingle(buffer, 0);
