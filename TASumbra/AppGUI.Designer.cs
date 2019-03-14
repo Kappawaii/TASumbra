@@ -63,7 +63,6 @@
             this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tests = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.performanceText = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.fpsLabel = new System.Windows.Forms.Label();
@@ -186,7 +185,7 @@
             this.ChangeNumberOfFramesButton.Name = "ChangeNumberOfFramesButton";
             this.ChangeNumberOfFramesButton.Size = new System.Drawing.Size(87, 50);
             this.ChangeNumberOfFramesButton.TabIndex = 11;
-            this.ChangeNumberOfFramesButton.Text = "Change number of lines";
+            this.ChangeNumberOfFramesButton.Text = "Change number of frames";
             this.ChangeNumberOfFramesButton.UseVisualStyleBackColor = true;
             this.ChangeNumberOfFramesButton.Click += new System.EventHandler(this.ChangeNumberOfFramesButton_Click);
             // 
@@ -222,7 +221,6 @@
             this.NewMovieButton.TabIndex = 8;
             this.NewMovieButton.Text = "New Movie";
             this.NewMovieButton.UseVisualStyleBackColor = true;
-            this.NewMovieButton.Visible = false;
             this.NewMovieButton.Click += new System.EventHandler(this.NewMovie_Click);
             // 
             // GoToRow
@@ -512,7 +510,6 @@
             this.tests.Controls.Add(this.label7);
             this.tests.Controls.Add(this.TimerDelayLabel);
             this.tests.Controls.Add(this.label6);
-            this.tests.Controls.Add(this.button1);
             this.tests.Controls.Add(this.performanceText);
             this.tests.Controls.Add(this.label3);
             this.tests.Controls.Add(this.fpsLabel);
@@ -530,16 +527,6 @@
             this.tests.TabIndex = 2;
             this.tests.Text = "RunLauncher";
             this.tests.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(126, 199);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Check";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
             // performanceText
             // 
@@ -783,14 +770,13 @@
         private System.Windows.Forms.Label License;
         private System.Windows.Forms.Label MadeByKappa;
         private System.Windows.Forms.PictureBox PictureBox1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn FrameNumber;
         private System.Windows.Forms.DataGridViewComboBoxColumn Run;
         private System.Windows.Forms.DataGridViewComboBoxColumn Jump;
         private System.Windows.Forms.DataGridViewComboBoxColumn Forwards;
         private System.Windows.Forms.DataGridViewComboBoxColumn Backwards;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Left;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Right;
+        private new System.Windows.Forms.DataGridViewComboBoxColumn Left;
+        private new System.Windows.Forms.DataGridViewComboBoxColumn Right;
         private System.Windows.Forms.DataGridViewComboBoxColumn LMB;
         private System.Windows.Forms.DataGridViewComboBoxColumn RMB;
         private System.Windows.Forms.DataGridViewComboBoxColumn Crouch;

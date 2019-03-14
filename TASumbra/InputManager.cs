@@ -8,10 +8,14 @@ namespace TASumbra
     class InputManager
     {
         private InputSimulator inputSimulator;
+        private readonly IMouseSimulator mouse;
+        private readonly IKeyboardSimulator keyboard;
 
         public InputManager()
         {
             inputSimulator = new InputSimulator();
+            mouse = inputSimulator.Mouse;
+            keyboard = inputSimulator.Keyboard;
         }
 
         public void MultipleInputs(List<Tuple<string, VirtualKeyCode, object>> inputs)
@@ -22,15 +26,41 @@ namespace TASumbra
             {
                 if (tuple.Item3 is string item3String)
                 {
-                    if (item3String == "Up")
+                    Console.WriteLine(tuple.Item1);
+                    if (tuple.Item1.EndsWith("MB"))
+                    {
+                        if (tuple.Item1.StartsWith("L"))
+                        {
+                            if (item3String.Equals("Up"))
+                            {
+                                LMBUp();
+                            }
+                            else if (item3String.Equals("Down"))
+                            {
+                                LMBDown();
+                            }
+                        }
+                        else if (tuple.Item1.StartsWith("R"))
+                        {
+                            if (item3String.Equals("Up"))
+                            {
+                                RMBUp();
+                            }
+                            else if (item3String.Equals("Down"))
+                            {
+                                RMBDown();
+                            }
+                        }
+                    }
+                    else if (item3String == "Up")
                     {
                         Console.WriteLine(tuple.Item2+"Up");
-                        inputSimulator.Keyboard.KeyUp(tuple.Item2);
+                        KeyUp(tuple.Item2);
                     }
                     else if (item3String == "Down")
                     {
                         Console.WriteLine(tuple.Item2 + "Down");
-                        inputSimulator.Keyboard.KeyDown(tuple.Item2);
+                        KeyDown(tuple.Item2);
                     }
                     else
                     {
@@ -55,33 +85,62 @@ namespace TASumbra
             }
             MouseMoveXY(mouseX, mouseY);
         }
-        /*
-            inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LSHIFT);
-            inputSimulator.Keyboard.KeyDown(VirtualKeyCode.VK_Z).Sleep(1000).KeyUp(VirtualKeyCode.VK_Z);
-            inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
-            for (int no = 0; no < 13; no++)
+
+        public void Reset()
+        {
+            foreach (VirtualKeyCode keyCode in Enum.GetValues(typeof(VirtualKeyCode)))
             {
-                inputSimulator.Mouse.MoveMouseBy(30, 0);
+                keyboard.KeyUp(keyCode);
             }
-        */
+        }
+
+        /*
+   inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LSHIFT);
+   inputSimulator.Keyboard.KeyDown(VirtualKeyCode.VK_Z).Sleep(1000).KeyUp(VirtualKeyCode.VK_Z);
+   inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
+   for (int no = 0; no < 13; no++)
+   {
+       inputSimulator.Mouse.MoveMouseBy(30, 0);
+   }
+*/
         public void KeyDown(VirtualKeyCode key)
         {
-            inputSimulator.Keyboard.KeyDown(key);
+            keyboard.KeyDown(key);
         }
 
         public void KeyUp(VirtualKeyCode key)
         {
-            inputSimulator.Keyboard.KeyUp(key);
+            keyboard.KeyUp(key);
+        }
+
+        public void LMBDown()
+        {
+            mouse.LeftButtonDown();
+        }
+
+        public void LMBUp()
+        {
+            mouse.LeftButtonUp();
+        }
+
+        public void RMBDown()
+        {
+            mouse.RightButtonDown();
+        }
+
+        public void RMBUp()
+        {
+            mouse.RightButtonUp();
         }
 
         public void MouseMoveXY(int x, int y)
         {
-            inputSimulator.Mouse.MoveMouseBy(x, y);
+            mouse.MoveMouseBy(x, y);
         }
 
         public void Scroll(int scrollAmount)
         {
-            inputSimulator.Mouse.VerticalScroll(scrollAmount);
+            mouse.VerticalScroll(scrollAmount);
         }
     }
 }

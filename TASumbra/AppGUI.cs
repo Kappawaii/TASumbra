@@ -23,6 +23,7 @@ namespace TASumbra
         {
             InitializeComponent();
             InitAboutTab();
+            tabControl.TabPages.RemoveAt(2);
         }
 
         private void InitAboutTab()
@@ -308,7 +309,8 @@ namespace TASumbra
 
         private void NewMovie_Click(object sender, EventArgs e)
         {
-
+            NumberOfFramesNumeric.Value = 3000;
+            ChangeNumberOfFramesButton_Click(sender, e);
         }
 
         private void SaveMovie_Click(object sender, EventArgs e)
@@ -376,11 +378,6 @@ namespace TASumbra
             ((ISupportInitialize)dataGridView1).EndInit();
             //NumberOfFramesNumeric.Maximum = dt.Rows.Count;
             LoadingLabel.Visible = false;
-        }
-
-        private void Button1_Click_1(object sender, EventArgs e)
-        {
-            Console.WriteLine(dt.Rows.Count);
         }
     }
 }

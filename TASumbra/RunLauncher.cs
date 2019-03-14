@@ -49,6 +49,12 @@ namespace TASumbra
             memoryReader.Destroy();
         }
 
+        public void Reset()
+        {
+            Destroy();
+
+        }
+
         public void Destroy(object sender, EventArgs e)
         {
             Destroy();
@@ -93,6 +99,7 @@ namespace TASumbra
             dontCare:
             if (finished)
             {
+                inputManager.Reset();
                 return;
             }
             //stopwatchtime = stopWatch.ElapsedTicks;
@@ -100,6 +107,10 @@ namespace TASumbra
             {
                 i++;
                 gameClock = memoryReader.GetGameClock();
+                if(currentFrame > 0 && gameClock == 0f)
+                {
+
+                }
                 if (gameClock > oldgameClock)
                 {
                     if (stopwatchtime > fpsCalcTemp * 10000000)

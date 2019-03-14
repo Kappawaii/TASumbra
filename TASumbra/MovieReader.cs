@@ -11,12 +11,12 @@ namespace TASumbra
         readonly string[] Keys =
             {
             "Run", "Forwards", "Backwards", "Left", "Right",
-            "LMB", "RMB", "Crouch", "Inventory"
+            "LMB", "RMB", "Crouch", "Inventory","Jump"
             };
         readonly VirtualKeyCode[] Binds =
             {
             VirtualKeyCode.LSHIFT, VirtualKeyCode.VK_Z, VirtualKeyCode.VK_S, VirtualKeyCode.VK_Q, VirtualKeyCode.VK_D,
-            VirtualKeyCode.LBUTTON, VirtualKeyCode.RBUTTON, VirtualKeyCode.LCONTROL, VirtualKeyCode.TAB
+            VirtualKeyCode.LBUTTON, VirtualKeyCode.RBUTTON, VirtualKeyCode.LCONTROL, VirtualKeyCode.TAB,VirtualKeyCode.SPACE
             };
         readonly string[] Axes =
             {
