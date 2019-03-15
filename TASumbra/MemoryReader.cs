@@ -16,6 +16,9 @@ namespace TASumbra
         int penumbraHandle;
         Process process;
 
+        byte[] buffer = new byte[4];
+        int bytesRead = 0;
+
         [DllImport("kernel32.dll")]
         private static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
@@ -51,9 +54,6 @@ namespace TASumbra
 
         public float GetGameClock()
         {
-            int bytesRead = 0;
-            byte[] buffer = new byte[4];
-
             //get first pointer addr
             ReadProcessMemory(penumbraHandle, 0x6DCAF0, buffer, buffer.Length, ref bytesRead);
             // follow pointer path with offsets (thanks Kotti)

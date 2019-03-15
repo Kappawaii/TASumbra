@@ -11,6 +11,11 @@ namespace TASumbra
         private readonly IMouseSimulator mouse;
         private readonly IKeyboardSimulator keyboard;
 
+        public IInputDeviceStateAdaptor InputDeviceStateAdaptor
+        {
+            get => inputSimulator.InputDeviceState;
+        }
+
         public InputManager()
         {
             inputSimulator = new InputSimulator();
@@ -92,17 +97,10 @@ namespace TASumbra
             {
                 keyboard.KeyUp(keyCode);
             }
+            RMBUp();
+            LMBUp();
         }
 
-        /*
-   inputSimulator.Keyboard.KeyDown(VirtualKeyCode.LSHIFT);
-   inputSimulator.Keyboard.KeyDown(VirtualKeyCode.VK_Z).Sleep(1000).KeyUp(VirtualKeyCode.VK_Z);
-   inputSimulator.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
-   for (int no = 0; no < 13; no++)
-   {
-       inputSimulator.Mouse.MoveMouseBy(30, 0);
-   }
-*/
         public void KeyDown(VirtualKeyCode key)
         {
             keyboard.KeyDown(key);

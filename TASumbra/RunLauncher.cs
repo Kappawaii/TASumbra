@@ -12,7 +12,8 @@ namespace TASumbra
     {
         private MemoryReader memoryReader;
         Thread gameClockRefresherThread;
-
+        Thread hardwareKeyListener;
+        
         private Label gameClockLabel;
         private Label frames;
         private int currentFrame = 0;
@@ -35,11 +36,18 @@ namespace TASumbra
 
         private float targetclock = 0f;
 
+
+        public void Reset()
+        {
+            Destroy();
+        }
+
         public void Destroy()
         {
             try
             {
                 gameClockRefresherThread.Abort();
+                hardwareKeyListener.Abort();
             }
             catch (Exception)
             {
@@ -47,12 +55,6 @@ namespace TASumbra
                 throw;
             }
             memoryReader.Destroy();
-        }
-
-        public void Reset()
-        {
-            Destroy();
-
         }
 
         public void Destroy(object sender, EventArgs e)
@@ -82,12 +84,25 @@ namespace TASumbra
                 return false;
             }
             gameClockRefresherThread = new Thread(GameClockRefresher);
+            hardwareKeyListener = new Thread(HardwareKeyListener);
             Application.ApplicationExit += Destroy;
+            hardwareKeyListener.Start();
             gameClockRefresherThread.Start();
             return true;
         }
 
-        public void GameClockRefresher()
+        private void HardwareKeyListener()
+        {
+            gotoBestLoop:
+            if (inputManager.InputDeviceStateAdaptor.IsHardwareKeyDown(VirtualKeyCode.DELETE))
+            {
+                finished = true;
+            }
+            Thread.Sleep(10);
+            goto gotoBestLoop;
+        }
+
+        private void GameClockRefresher()
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
