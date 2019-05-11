@@ -31,14 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppGUI));
             this.Label1 = new System.Windows.Forms.Label();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.Settings = new System.Windows.Forms.TabPage();
-            this.PenumbraPathSelect = new System.Windows.Forms.Button();
-            this.PenumbraPathTextBox = new System.Windows.Forms.MaskedTextBox();
             this.MovieEditor = new System.Windows.Forms.TabPage();
             this.LoadingLabel = new System.Windows.Forms.Label();
             this.ChangeNumberOfFramesButton = new System.Windows.Forms.Button();
             this.NumberOfFramesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.NumberOfFramesLabel = new System.Windows.Forms.Label();
+            this.NumberOfpenumbraClockLabel = new System.Windows.Forms.Label();
             this.NewMovieButton = new System.Windows.Forms.Button();
             this.GoToRow = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -46,7 +43,6 @@
             this.LoadMovieButton = new System.Windows.Forms.Button();
             this.SaveMovieButton = new System.Windows.Forms.Button();
             this.MovieNumberLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.FrameNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Run = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -63,32 +59,36 @@
             this.MouseY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tests = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.TimerDelayLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.performanceText = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.fpsLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.framesLabel = new System.Windows.Forms.Label();
+            this.penumbraClockLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.GameTime = new System.Windows.Forms.Label();
             this.LaunchRunLabel = new System.Windows.Forms.Label();
-            this.penumbraTimeText = new System.Windows.Forms.Label();
+            this.penumbraFrameText = new System.Windows.Forms.Label();
             this.LaunchRun = new System.Windows.Forms.Button();
+            this.Settings = new System.Windows.Forms.TabPage();
+            this.PenumbraPathSelect = new System.Windows.Forms.Button();
+            this.PenumbraPathTextBox = new System.Windows.Forms.MaskedTextBox();
             this.AboutTab = new System.Windows.Forms.TabPage();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.License = new System.Windows.Forms.Label();
             this.MadeByKappa = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.TimerDelayLabel = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabControl.SuspendLayout();
-            this.Settings.SuspendLayout();
             this.MovieEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumberOfFramesNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoToRowNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tests.SuspendLayout();
+            this.Settings.SuspendLayout();
             this.AboutTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -114,43 +114,15 @@
             this.tabControl.Size = new System.Drawing.Size(1004, 502);
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl.TabIndex = 1;
-            // 
-            // Settings
-            // 
-            this.Settings.Controls.Add(this.PenumbraPathSelect);
-            this.Settings.Controls.Add(this.PenumbraPathTextBox);
-            this.Settings.Controls.Add(this.Label1);
-            this.Settings.Location = new System.Drawing.Point(4, 22);
-            this.Settings.Name = "Settings";
-            this.Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.Settings.Size = new System.Drawing.Size(996, 476);
-            this.Settings.TabIndex = 0;
-            this.Settings.Text = "Settings";
-            this.Settings.UseVisualStyleBackColor = true;
-            // 
-            // PenumbraPathSelect
-            // 
-            this.PenumbraPathSelect.Location = new System.Drawing.Point(456, 18);
-            this.PenumbraPathSelect.Name = "PenumbraPathSelect";
-            this.PenumbraPathSelect.Size = new System.Drawing.Size(26, 22);
-            this.PenumbraPathSelect.TabIndex = 2;
-            this.PenumbraPathSelect.Text = "...";
-            this.PenumbraPathSelect.UseVisualStyleBackColor = true;
-            this.PenumbraPathSelect.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // PenumbraPathTextBox
-            // 
-            this.PenumbraPathTextBox.Location = new System.Drawing.Point(8, 19);
-            this.PenumbraPathTextBox.Name = "PenumbraPathTextBox";
-            this.PenumbraPathTextBox.Size = new System.Drawing.Size(442, 20);
-            this.PenumbraPathTextBox.TabIndex = 1;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // MovieEditor
             // 
+            this.MovieEditor.Controls.Add(this.comboBox1);
             this.MovieEditor.Controls.Add(this.LoadingLabel);
             this.MovieEditor.Controls.Add(this.ChangeNumberOfFramesButton);
             this.MovieEditor.Controls.Add(this.NumberOfFramesNumeric);
-            this.MovieEditor.Controls.Add(this.NumberOfFramesLabel);
+            this.MovieEditor.Controls.Add(this.NumberOfpenumbraClockLabel);
             this.MovieEditor.Controls.Add(this.NewMovieButton);
             this.MovieEditor.Controls.Add(this.GoToRow);
             this.MovieEditor.Controls.Add(this.label5);
@@ -158,7 +130,6 @@
             this.MovieEditor.Controls.Add(this.LoadMovieButton);
             this.MovieEditor.Controls.Add(this.SaveMovieButton);
             this.MovieEditor.Controls.Add(this.MovieNumberLabel);
-            this.MovieEditor.Controls.Add(this.numericUpDown1);
             this.MovieEditor.Controls.Add(this.dataGridView1);
             this.MovieEditor.Location = new System.Drawing.Point(4, 22);
             this.MovieEditor.Name = "MovieEditor";
@@ -202,16 +173,16 @@
             this.NumberOfFramesNumeric.Size = new System.Drawing.Size(61, 20);
             this.NumberOfFramesNumeric.TabIndex = 10;
             // 
-            // NumberOfFramesLabel
+            // NumberOfpenumbraClockLabel
             // 
-            this.NumberOfFramesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NumberOfFramesLabel.AutoSize = true;
-            this.NumberOfFramesLabel.Location = new System.Drawing.Point(895, 155);
-            this.NumberOfFramesLabel.Name = "NumberOfFramesLabel";
-            this.NumberOfFramesLabel.Size = new System.Drawing.Size(80, 13);
-            this.NumberOfFramesLabel.TabIndex = 9;
-            this.NumberOfFramesLabel.Text = "Movie number :";
-            this.NumberOfFramesLabel.Visible = false;
+            this.NumberOfpenumbraClockLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.NumberOfpenumbraClockLabel.AutoSize = true;
+            this.NumberOfpenumbraClockLabel.Location = new System.Drawing.Point(895, 155);
+            this.NumberOfpenumbraClockLabel.Name = "NumberOfpenumbraClockLabel";
+            this.NumberOfpenumbraClockLabel.Size = new System.Drawing.Size(80, 13);
+            this.NumberOfpenumbraClockLabel.TabIndex = 9;
+            this.NumberOfpenumbraClockLabel.Text = "Movie number :";
+            this.NumberOfpenumbraClockLabel.Visible = false;
             // 
             // NewMovieButton
             // 
@@ -285,20 +256,11 @@
             // MovieNumberLabel
             // 
             this.MovieNumberLabel.AutoSize = true;
-            this.MovieNumberLabel.Location = new System.Drawing.Point(370, 21);
+            this.MovieNumberLabel.Location = new System.Drawing.Point(322, 20);
             this.MovieNumberLabel.Name = "MovieNumberLabel";
-            this.MovieNumberLabel.Size = new System.Drawing.Size(80, 13);
+            this.MovieNumberLabel.Size = new System.Drawing.Size(42, 13);
             this.MovieNumberLabel.TabIndex = 2;
-            this.MovieNumberLabel.Text = "Movie number :";
-            this.MovieNumberLabel.Visible = false;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(456, 19);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDown1.TabIndex = 1;
-            this.numericUpDown1.Visible = false;
+            this.MovieNumberLabel.Text = "Movie: ";
             // 
             // dataGridView1
             // 
@@ -506,6 +468,7 @@
             // 
             // tests
             // 
+            this.tests.Controls.Add(this.label9);
             this.tests.Controls.Add(this.label8);
             this.tests.Controls.Add(this.label7);
             this.tests.Controls.Add(this.TimerDelayLabel);
@@ -514,11 +477,11 @@
             this.tests.Controls.Add(this.label3);
             this.tests.Controls.Add(this.fpsLabel);
             this.tests.Controls.Add(this.label4);
-            this.tests.Controls.Add(this.framesLabel);
+            this.tests.Controls.Add(this.penumbraClockLabel);
             this.tests.Controls.Add(this.label2);
             this.tests.Controls.Add(this.GameTime);
             this.tests.Controls.Add(this.LaunchRunLabel);
-            this.tests.Controls.Add(this.penumbraTimeText);
+            this.tests.Controls.Add(this.penumbraFrameText);
             this.tests.Controls.Add(this.LaunchRun);
             this.tests.Location = new System.Drawing.Point(4, 22);
             this.tests.Name = "tests";
@@ -527,6 +490,57 @@
             this.tests.TabIndex = 2;
             this.tests.Text = "RunLauncher";
             this.tests.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 230);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(197, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "This can cause your input to be ignored.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(165, 137);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(111, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "time between our loop";
+            this.label8.Click += new System.EventHandler(this.Label8_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 208);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(474, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "A delay means the game advanced more than 1 frame since we last checked what fram" +
+    "e it was on.";
+            this.label7.Click += new System.EventHandler(this.Label7_Click);
+            // 
+            // TimerDelayLabel
+            // 
+            this.TimerDelayLabel.AutoSize = true;
+            this.TimerDelayLabel.Location = new System.Drawing.Point(82, 185);
+            this.TimerDelayLabel.MaximumSize = new System.Drawing.Size(200, 0);
+            this.TimerDelayLabel.MinimumSize = new System.Drawing.Size(50, 0);
+            this.TimerDelayLabel.Name = "TimerDelayLabel";
+            this.TimerDelayLabel.Size = new System.Drawing.Size(56, 13);
+            this.TimerDelayLabel.TabIndex = 12;
+            this.TimerDelayLabel.Text = "no delay...";
+            this.TimerDelayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 185);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Timer delay :";
             // 
             // performanceText
             // 
@@ -567,32 +581,32 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Fps:";
             // 
-            // framesLabel
+            // penumbraClockLabel
             // 
-            this.framesLabel.AutoSize = true;
-            this.framesLabel.Location = new System.Drawing.Point(89, 73);
-            this.framesLabel.Name = "framesLabel";
-            this.framesLabel.Size = new System.Drawing.Size(16, 13);
-            this.framesLabel.TabIndex = 5;
-            this.framesLabel.Text = "-1";
+            this.penumbraClockLabel.AutoSize = true;
+            this.penumbraClockLabel.Location = new System.Drawing.Point(89, 73);
+            this.penumbraClockLabel.Name = "penumbraClockLabel";
+            this.penumbraClockLabel.Size = new System.Drawing.Size(16, 13);
+            this.penumbraClockLabel.TabIndex = 5;
+            this.penumbraClockLabel.Text = "-1";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(9, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "CurrentFrame :";
+            this.label2.Text = "GameClock :";
             // 
             // GameTime
             // 
             this.GameTime.AutoSize = true;
             this.GameTime.Location = new System.Drawing.Point(139, 35);
             this.GameTime.Name = "GameTime";
-            this.GameTime.Size = new System.Drawing.Size(61, 13);
+            this.GameTime.Size = new System.Drawing.Size(64, 13);
             this.GameTime.TabIndex = 3;
-            this.GameTime.Text = "GameTime:";
+            this.GameTime.Text = "GameFrame";
             // 
             // LaunchRunLabel
             // 
@@ -604,15 +618,15 @@
             this.LaunchRunLabel.TabIndex = 2;
             this.LaunchRunLabel.Click += new System.EventHandler(this.GameTimeStaticLabel);
             // 
-            // penumbraTimeText
+            // penumbraFrameText
             // 
-            this.penumbraTimeText.AutoSize = true;
-            this.penumbraTimeText.Location = new System.Drawing.Point(206, 35);
-            this.penumbraTimeText.Name = "penumbraTimeText";
-            this.penumbraTimeText.Size = new System.Drawing.Size(67, 13);
-            this.penumbraTimeText.TabIndex = 1;
-            this.penumbraTimeText.Text = "not detected";
-            this.penumbraTimeText.Click += new System.EventHandler(this.TimeText_Click);
+            this.penumbraFrameText.AutoSize = true;
+            this.penumbraFrameText.Location = new System.Drawing.Point(206, 35);
+            this.penumbraFrameText.Name = "penumbraFrameText";
+            this.penumbraFrameText.Size = new System.Drawing.Size(67, 13);
+            this.penumbraFrameText.TabIndex = 1;
+            this.penumbraFrameText.Text = "not detected";
+            this.penumbraFrameText.Click += new System.EventHandler(this.TimeText_Click);
             // 
             // LaunchRun
             // 
@@ -620,9 +634,39 @@
             this.LaunchRun.Name = "LaunchRun";
             this.LaunchRun.Size = new System.Drawing.Size(129, 23);
             this.LaunchRun.TabIndex = 0;
-            this.LaunchRun.Text = "Launch Run / Restart";
+            this.LaunchRun.Text = "Attach to game";
             this.LaunchRun.UseVisualStyleBackColor = true;
             this.LaunchRun.Click += new System.EventHandler(this.LaunchRun_Click);
+            // 
+            // Settings
+            // 
+            this.Settings.Controls.Add(this.PenumbraPathSelect);
+            this.Settings.Controls.Add(this.PenumbraPathTextBox);
+            this.Settings.Controls.Add(this.Label1);
+            this.Settings.Location = new System.Drawing.Point(4, 22);
+            this.Settings.Name = "Settings";
+            this.Settings.Padding = new System.Windows.Forms.Padding(3);
+            this.Settings.Size = new System.Drawing.Size(996, 476);
+            this.Settings.TabIndex = 0;
+            this.Settings.Text = "Settings";
+            this.Settings.UseVisualStyleBackColor = true;
+            // 
+            // PenumbraPathSelect
+            // 
+            this.PenumbraPathSelect.Location = new System.Drawing.Point(456, 18);
+            this.PenumbraPathSelect.Name = "PenumbraPathSelect";
+            this.PenumbraPathSelect.Size = new System.Drawing.Size(26, 22);
+            this.PenumbraPathSelect.TabIndex = 2;
+            this.PenumbraPathSelect.Text = "...";
+            this.PenumbraPathSelect.UseVisualStyleBackColor = true;
+            this.PenumbraPathSelect.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // PenumbraPathTextBox
+            // 
+            this.PenumbraPathTextBox.Location = new System.Drawing.Point(8, 19);
+            this.PenumbraPathTextBox.Name = "PenumbraPathTextBox";
+            this.PenumbraPathTextBox.Size = new System.Drawing.Size(442, 20);
+            this.PenumbraPathTextBox.TabIndex = 1;
             // 
             // AboutTab
             // 
@@ -661,47 +705,19 @@
             this.MadeByKappa.AutoSize = true;
             this.MadeByKappa.Location = new System.Drawing.Point(679, 457);
             this.MadeByKappa.Name = "MadeByKappa";
-            this.MadeByKappa.Size = new System.Drawing.Size(160, 13);
+            this.MadeByKappa.Size = new System.Drawing.Size(159, 13);
             this.MadeByKappa.TabIndex = 0;
             this.MadeByKappa.Text = "Made by Kappawaii with love ❤️";
             // 
-            // label6
+            // comboBox1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 164);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Timer delay :";
-            // 
-            // TimerDelayLabel
-            // 
-            this.TimerDelayLabel.AutoSize = true;
-            this.TimerDelayLabel.Location = new System.Drawing.Point(82, 164);
-            this.TimerDelayLabel.MinimumSize = new System.Drawing.Size(50, 0);
-            this.TimerDelayLabel.Name = "TimerDelayLabel";
-            this.TimerDelayLabel.Size = new System.Drawing.Size(50, 13);
-            this.TimerDelayLabel.TabIndex = 12;
-            this.TimerDelayLabel.Text = "-1 ms";
-            this.TimerDelayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(165, 164);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(141, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Should be 0 most of the time";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(165, 137);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(207, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Should be under or around 2ms at all times";
+            this.comboBox1.AllowDrop = true;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(370, 17);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 13;
+            this.comboBox1.DropDown += new System.EventHandler(this.ScanForMovies);
             // 
             // AppGUI
             // 
@@ -717,16 +733,15 @@
             this.Load += new System.EventHandler(this.App_Load);
             this.Shown += new System.EventHandler(this.App_Shown);
             this.tabControl.ResumeLayout(false);
-            this.Settings.ResumeLayout(false);
-            this.Settings.PerformLayout();
             this.MovieEditor.ResumeLayout(false);
             this.MovieEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumberOfFramesNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoToRowNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tests.ResumeLayout(false);
             this.tests.PerformLayout();
+            this.Settings.ResumeLayout(false);
+            this.Settings.PerformLayout();
             this.AboutTab.ResumeLayout(false);
             this.AboutTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
@@ -744,15 +759,14 @@
         private System.Windows.Forms.Button PenumbraPathSelect;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label MovieNumberLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TabPage tests;
-        private System.Windows.Forms.Label penumbraTimeText;
+        private System.Windows.Forms.Label penumbraFrameText;
         private System.Windows.Forms.Button LaunchRun;
         private System.Windows.Forms.Label LaunchRunLabel;
         private System.Windows.Forms.Label GameTime;
         private System.Windows.Forms.Label fpsLabel;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label framesLabel;
+        private System.Windows.Forms.Label penumbraClockLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label performanceText;
         private System.Windows.Forms.Label label3;
@@ -764,7 +778,7 @@
         private System.Windows.Forms.Button NewMovieButton;
         private System.Windows.Forms.Button ChangeNumberOfFramesButton;
         private System.Windows.Forms.NumericUpDown NumberOfFramesNumeric;
-        private System.Windows.Forms.Label NumberOfFramesLabel;
+        private System.Windows.Forms.Label NumberOfpenumbraClockLabel;
         private System.Windows.Forms.Label LoadingLabel;
         private System.Windows.Forms.TabPage AboutTab;
         private System.Windows.Forms.Label License;
@@ -788,5 +802,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

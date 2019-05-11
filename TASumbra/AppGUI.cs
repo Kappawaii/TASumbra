@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -18,12 +19,15 @@ namespace TASumbra
     {
         RunLauncher runLauncher;
         DataTable dt;
+        List<string> movies;
 
         public AppGUI()
         {
             InitializeComponent();
             InitAboutTab();
             tabControl.TabPages.RemoveAt(2);
+            movies = new List<string>();
+            ScanForMovies();
         }
 
         private void InitAboutTab()
@@ -53,6 +57,22 @@ namespace TASumbra
             dt.Columns.Add("MouseY", Type.GetType("System.Int32"));
             dt.Columns.Add("Comments");
 
+        }
+
+        private void ScanForMovies(object sender, EventArgs e)
+        {
+            ScanForMovies();
+        }
+
+        private void ScanForMovies()
+        {
+            comboBox1.Items.Clear();
+            string extension = ".xml";
+            IEnumerable<string> filesScanned = Directory.EnumerateFiles(@".\movies\", "*.*", SearchOption.AllDirectories).Where(s => extension == Path.GetExtension(s));
+            foreach (string movie in filesScanned)
+            {
+                comboBox1.Items.Add(Path.GetFileNameWithoutExtension(movie));
+            }
         }
 
         protected void DataTable_RowChanged(object sender, DataRowChangeEventArgs e)
@@ -275,12 +295,12 @@ namespace TASumbra
             {
                 MessageBox.Show("TAS already running", "FeelsBadMan");
             }*/
-            //penumbraTimeText.Text = MemoryReader.ReadPenumbraMemory().ToString();
+            //penumbraFrameText.Text = MemoryReader.ReadPenumbraMemory().ToString();
         }
 
         private void RunLauncher_Start()
         {
-            runLauncher = new RunLauncher(dt, PenumbraPathTextBox.Text, penumbraTimeText, framesLabel, fpsLabel, performanceText,TimerDelayLabel);
+            runLauncher = new RunLauncher(dt, PenumbraPathTextBox.Text, penumbraFrameText, penumbraClockLabel, fpsLabel, performanceText,TimerDelayLabel);
             if (!runLauncher.runStarted)
             {
 
@@ -311,14 +331,16 @@ namespace TASumbra
         {
             NumberOfFramesNumeric.Value = 3000;
             ChangeNumberOfFramesButton_Click(sender, e);
+            comboBox1.SelectedIndex = comboBox1.Items.Add("NewMovie");
         }
 
         private void SaveMovie_Click(object sender, EventArgs e)
         {
+            string currentMovie = comboBox1.Text;
             string tempfolder = @".\movies\temp";
-            string tempXmlPath = @".\movies\temp\movie.xml";
-            string xmlPath = @".\movies\movie.xml";
-            string zipPath = @".\movies\movie.zip";
+            string tempXmlPath = @".\movies\temp\" + currentMovie + ".xml";
+            string xmlPath = @".\movies\" + currentMovie + ".xml";
+            string zipPath = @".\movies\" + currentMovie + ".zip";
             Directory.CreateDirectory(tempfolder);
             dt.WriteXml(tempXmlPath);
             if (File.Exists(zipPath))
@@ -329,15 +351,17 @@ namespace TASumbra
             File.Copy(tempXmlPath, xmlPath, true);
             File.Delete(tempXmlPath);
             Directory.Delete(tempfolder);
+            ScanForMovies();
         }
 
         private void LoadMovie_Click(object sender, EventArgs e)
         {
+            string currentMovie = comboBox1.Text;
             //LoadingLabel.Visible = true;
             dt.Clear();
             try
             {
-                dt.ReadXml("movies/movie.xml");
+                dt.ReadXml("movies/" + currentMovie + ".xml");
             }
             catch (Exception)
             {
@@ -378,6 +402,21 @@ namespace TASumbra
             ((ISupportInitialize)dataGridView1).EndInit();
             //NumberOfFramesNumeric.Maximum = dt.Rows.Count;
             LoadingLabel.Visible = false;
+        }
+
+        private void Label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

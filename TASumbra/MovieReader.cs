@@ -15,7 +15,7 @@ namespace TASumbra
             };
         readonly VirtualKeyCode[] Binds =
             {
-            VirtualKeyCode.LSHIFT, VirtualKeyCode.VK_Z, VirtualKeyCode.VK_S, VirtualKeyCode.VK_Q, VirtualKeyCode.VK_D,
+            VirtualKeyCode.LSHIFT, VirtualKeyCode.VK_W, VirtualKeyCode.VK_S, VirtualKeyCode.VK_A, VirtualKeyCode.VK_D,
             VirtualKeyCode.LBUTTON, VirtualKeyCode.RBUTTON, VirtualKeyCode.LCONTROL, VirtualKeyCode.TAB,VirtualKeyCode.SPACE
             };
         readonly string[] Axes =
