@@ -21,3 +21,9 @@ Note: A movie refers to a file that stores input per frame.
 - When you pause the game, the movie doesn't pause.
 
 - The movie doesn't always have the same result, this is most likely due to Penumbra's physics engine not being 100% consistent.
+
+## Contact
+
+**You can find us on the "HPL Games Speedrunning" Discord server:**
+
+[![Discord invite](https://media.forgecdn.net/avatars/158/997/636656092575078736.png)](https://discord.gg/UpHrzdm)
