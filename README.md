@@ -25,5 +25,4 @@ Note: A movie refers to a file that stores input per frame.
 ## Contact
 
 **You can find us on the "HPL Games Speedrunning" Discord server:**
-
-[![Discord invite](https://lh3.googleusercontent.com/_4zBNFjA8S9yjNB_ONwqBvxTvyXYdC7Nh1jYZ2x6YEcldBr2fyijdjM2J5EoVdTpnkA=w256)](https://discord.gg/UpHrzdm)
+[![Discord invite](github/invite.png)](https://discord.gg/UpHrzdm)
