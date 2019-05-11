@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,14 +17,26 @@ namespace TASumbra
     }
     public partial class AppGUI : Form
     {
-        bool runStarted = false;
-
+        RunLauncher runLauncher;
         DataTable dt;
+        List<string> movies;
 
         public AppGUI()
         {
             InitializeComponent();
+            InitAboutTab();
+            tabControl.TabPages.RemoveAt(2);
+            movies = new List<string>();
+            ScanForMovies();
         }
+
+        private void InitAboutTab()
+        {
+            PictureBox1.Anchor = AnchorStyles.Bottom;
+            MadeByKappa.Anchor = AnchorStyles.Bottom;
+            License.Anchor = AnchorStyles.Bottom;
+        }
+
         private void InitializeDataTable()
         {
             dt = new DataTable("TASumbra");
@@ -28,6 +44,7 @@ namespace TASumbra
             dt.RowChanged += DataTable_RowChanged;
             dt.Columns.Add("FrameNumber", Type.GetType("System.String"));
             dt.Columns.Add("Run");
+            dt.Columns.Add("Jump");
             dt.Columns.Add("Forwards");
             dt.Columns.Add("Backwards");
             dt.Columns.Add("Left");
@@ -38,16 +55,23 @@ namespace TASumbra
             dt.Columns.Add("Inventory");
             dt.Columns.Add("MouseX", Type.GetType("System.Int32"));
             dt.Columns.Add("MouseY", Type.GetType("System.Int32"));
-            try
+            dt.Columns.Add("Comments");
+
+        }
+
+        private void ScanForMovies(object sender, EventArgs e)
+        {
+            ScanForMovies();
+        }
+
+        private void ScanForMovies()
+        {
+            comboBox1.Items.Clear();
+            string extension = ".xml";
+            IEnumerable<string> filesScanned = Directory.EnumerateFiles(@".\movies\", "*.*", SearchOption.AllDirectories).Where(s => extension == Path.GetExtension(s));
+            foreach (string movie in filesScanned)
             {
-                LoadMovie_Click(null, null);
-            }
-            catch (FileNotFoundException)
-            {
-                for (int i = 0; i < 600; i++)
-                {
-                    dt.Rows.Add();
-                }
+                comboBox1.Items.Add(Path.GetFileNameWithoutExtension(movie));
             }
         }
 
@@ -62,6 +86,11 @@ namespace TASumbra
 
         private void ApplyDataGridViewStyle()
         {
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 col.DataPropertyName = col.Name;
@@ -98,7 +127,7 @@ namespace TASumbra
         {
             // = DataGridViewComboBoxDisplayStyle.Nothing
             DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            Console.WriteLine(cell.Value.ToString());
+            //Console.WriteLine(cell.Value.ToString());
             DataGridViewCellStyle cellColor = cell.Style;
             if (cell.Value == DBNull.Value)
             {
@@ -141,11 +170,25 @@ namespace TASumbra
             }
 
         }
-
+        private void App_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadMovie_Click(null, null);
+            }
+            catch (FileNotFoundException)
+            {
+                /* random filling of gridview
+                Random rand = new Random();
+                for (int i = 0; i < 46800; i++)
+                {
+                    dt.Rows.Add("1","Down","Up","Down", "Down", "Up", "Down", "Down", "Up", "Down", 0, 1, "Down");
+                }*/
+            }
+        }
         private void App_Load(object sender, EventArgs e)
         {
             dataGridView1.AutoGenerateColumns = false;
-
             InitializeDataTable();
             dataGridView1.DataSource = dt;
             ApplyDataGridViewStyle();
@@ -166,6 +209,7 @@ namespace TASumbra
         private void DataTable_TableNewRow(object sender, DataRow row)
         {
             CheckValueOrAddDefault(row, "Run", "/");
+            CheckValueOrAddDefault(row, "Jump", "/");
             CheckValueOrAddDefault(row, "Forwards", "/");
             CheckValueOrAddDefault(row, "Backwards", "/");
             CheckValueOrAddDefault(row, "Left", "/");
@@ -174,6 +218,8 @@ namespace TASumbra
             CheckValueOrAddDefault(row, "RMB", "/");
             CheckValueOrAddDefault(row, "Crouch", "/");
             CheckValueOrAddDefault(row, "Inventory", "/");
+            CheckValueOrAddDefault(row, "MouseX", 0);
+            CheckValueOrAddDefault(row, "MouseY", 0);
             CheckValueOrAddDefault(row, "FrameNumber", dt.Rows.IndexOf(row) + 1);
 
 
@@ -217,14 +263,13 @@ namespace TASumbra
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            ComboBox ctrl = e.Control as ComboBox;
-            if (ctrl != null)
+            if (e.Control is ComboBox ctrl)
             {
-                ctrl.Enter -= new EventHandler(ctrl_Enter);
-                ctrl.Enter += new EventHandler(ctrl_Enter);
+                ctrl.Enter -= new EventHandler(Ctrl_Enter);
+                ctrl.Enter += new EventHandler(Ctrl_Enter);
             }
         }
-        void ctrl_Enter(object sender, EventArgs e)
+        void Ctrl_Enter(object sender, EventArgs e)
         {
             (sender as ComboBox).DroppedDown = true;
         }
@@ -234,14 +279,34 @@ namespace TASumbra
 
         }
 
-        private void GetTime_Click(object sender, EventArgs e)
+        private void LaunchRun_Click(object sender, EventArgs e)
         {
-            if (!runStarted)
+            //Console.WriteLine(dt.Rows.Count);
+            if (runLauncher == null)
             {
-                RunLauncher runLauncher = new RunLauncher(PenumbraPathTextBox.Text, penumbraTimeText, framesLabel, fpsLabel, performanceText);
+                RunLauncher_Start();
+            }
+            else
+            {
+                runLauncher.Destroy();
+                RunLauncher_Start();
+            }
+            /*else
+            {
+                MessageBox.Show("TAS already running", "FeelsBadMan");
+            }*/
+            //penumbraFrameText.Text = MemoryReader.ReadPenumbraMemory().ToString();
+        }
+
+        private void RunLauncher_Start()
+        {
+            runLauncher = new RunLauncher(dt, PenumbraPathTextBox.Text, penumbraFrameText, penumbraClockLabel, fpsLabel, performanceText,TimerDelayLabel);
+            if (!runLauncher.runStarted)
+            {
+
                 if (runLauncher.Start())
                 {
-                    runStarted = true;
+                    runLauncher.runStarted = true;
                 }
                 else
                 {
@@ -249,7 +314,6 @@ namespace TASumbra
                 }
 
             }
-            //penumbraTimeText.Text = MemoryReader.ReadPenumbraMemory().ToString();
         }
 
         private void GameTimeStaticLabel(object sender, EventArgs e)
@@ -265,18 +329,47 @@ namespace TASumbra
 
         private void NewMovie_Click(object sender, EventArgs e)
         {
-
+            NumberOfFramesNumeric.Value = 3000;
+            ChangeNumberOfFramesButton_Click(sender, e);
+            comboBox1.SelectedIndex = comboBox1.Items.Add("NewMovie");
         }
 
         private void SaveMovie_Click(object sender, EventArgs e)
         {
-            dt.WriteXml("movies/movie.xml");
+            string currentMovie = comboBox1.Text;
+            string tempfolder = @".\movies\temp";
+            string tempXmlPath = @".\movies\temp\" + currentMovie + ".xml";
+            string xmlPath = @".\movies\" + currentMovie + ".xml";
+            string zipPath = @".\movies\" + currentMovie + ".zip";
+            Directory.CreateDirectory(tempfolder);
+            dt.WriteXml(tempXmlPath);
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+            ZipFile.CreateFromDirectory(tempfolder, zipPath);
+            File.Copy(tempXmlPath, xmlPath, true);
+            File.Delete(tempXmlPath);
+            Directory.Delete(tempfolder);
+            ScanForMovies();
         }
 
         private void LoadMovie_Click(object sender, EventArgs e)
         {
+            string currentMovie = comboBox1.Text;
+            //LoadingLabel.Visible = true;
             dt.Clear();
-            dt.ReadXml("movies/movie.xml");
+            try
+            {
+                dt.ReadXml("movies/" + currentMovie + ".xml");
+            }
+            catch (Exception)
+            {
+                //LoadingLabel.Visible = false;
+                //throw;
+            }
+            //LoadingLabel.Visible = false;
+            //NumberOfFramesNumeric.Value = dt.Rows.Count;
         }
 
         private void GoToRow_Click(object sender, EventArgs e)
@@ -286,11 +379,15 @@ namespace TASumbra
 
         private void ChangeNumberOfFramesButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(NumberOfFramesNumeric.Value);
-            Console.WriteLine(dt.Rows.Count);
+            LoadingLabel.Visible = true;
+            Thread.Sleep(1000);
+            dt.BeginLoadData();
+            ((ISupportInitialize)dataGridView1).BeginInit();
+
             int numericValue = (int)NumberOfFramesNumeric.Value;
             if (numericValue > dt.Rows.Count)
             {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
                 int rowsToAdd = numericValue - dt.Rows.Count;
                 for (int i = 0; i < rowsToAdd; i++)
                 {
@@ -301,6 +398,25 @@ namespace TASumbra
             {
                 dt.Rows.RemoveAt(dt.Rows.Count - 1);
             }
+            dt.EndLoadData();
+            ((ISupportInitialize)dataGridView1).EndInit();
+            //NumberOfFramesNumeric.Maximum = dt.Rows.Count;
+            LoadingLabel.Visible = false;
+        }
+
+        private void Label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

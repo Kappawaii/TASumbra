@@ -2,10 +2,6 @@
 using System.Diagnostics;
 using WindowsInput;
 using System.Windows.Forms;
-using System;
-using System.Diagnostics;
-using WindowsInput;
-using System.Windows.Forms;
 
 namespace TASumbra
 {
@@ -14,7 +10,7 @@ namespace TASumbra
         [STAThread]
         static void Main(string[] args)
         {
-            InputSimulator inputSimulator = new InputSimulator();
+            //InputSimulator inputSimulator = new InputSimulator();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AppGUI());
