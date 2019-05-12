@@ -62,5 +62,12 @@ namespace TASumbra
             ReadProcessMemory(penumbraHandle, BitConverter.ToInt32(buffer, 0) + 0x1C, buffer, buffer.Length, ref bytesRead);
             return BitConverter.ToSingle(buffer, 0);
         }
+
+        public int GetFrameCount()
+        {
+            //get frame count addr
+            ReadProcessMemory(penumbraHandle, 0x6E210C, buffer, buffer.Length, ref bytesRead);
+            return BitConverter.ToInt32(buffer, 0);
+        }
     }
 }

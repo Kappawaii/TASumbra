@@ -14,9 +14,10 @@ namespace TASumbra
         Thread gameClockRefresherThread;
         Thread hardwareKeyListener;
         
+        private Label gameFramesLabel;
         private Label gameClockLabel;
-        private Label frames;
         private int currentFrame = 0;
+        private int frameOfGameStart = 0;
         private Label fps;
         private int fpsTemp = 0;
         private Label performanceText;
@@ -33,8 +34,6 @@ namespace TASumbra
         public bool finished = false;
 
         public string penumbraPath;
-
-        private float targetclock = 0f;
 
 
         public void Reset()
@@ -62,12 +61,12 @@ namespace TASumbra
             Destroy();
         }
 
-        public RunLauncher(DataTable dt, string gamePath, Label gameClockLabel, Label frames, Label fps, Label performanceText, Label timerDelayLabel)
+        public RunLauncher(DataTable dt, string gamePath, Label gameFramesLabel, Label gameClockLabel, Label fps, Label performanceText, Label timerDelayLabel)
         {
             penumbraPath = gamePath;
             memoryReader = new MemoryReader();
+            this.gameFramesLabel = gameFramesLabel;
             this.gameClockLabel = gameClockLabel;
-            this.frames = frames;
             this.fps = fps;
             this.performanceText = performanceText;
             this.dt = dt;
@@ -110,7 +109,9 @@ namespace TASumbra
             long fpsCalcTemp = 1;
             long i = 0;
             float oldgameClock = 0f;
+            int oldFrameCount = 0;
             float gameClock;
+            int gameFrameCount;
             dontCare:
             if (finished)
             {
@@ -118,41 +119,48 @@ namespace TASumbra
                 return;
             }
             //stopwatchtime = stopWatch.ElapsedTicks;
-            gameClockLabel.Invoke(new MethodInvoker(delegate
+            gameFramesLabel.Invoke(new MethodInvoker(delegate
             {
                 i++;
                 gameClock = memoryReader.GetGameClock();
-                if(currentFrame > 0 && gameClock == 0f)
+                gameFrameCount = memoryReader.GetFrameCount();
+                if ((gameClock == 0 && oldgameClock == 0) || oldgameClock > gameClock)
                 {
-
+                    timerDelayLabel.Text = Math.Abs(gameClock - oldgameClock).ToString();
+                    currentFrame = 0;
+                    oldFrameCount = 0;
+                    frameOfGameStart = gameFrameCount;
                 }
-                if (gameClock > oldgameClock)
+                oldgameClock = gameClock;
+                currentFrame = gameFrameCount - frameOfGameStart;
+                if (currentFrame > oldFrameCount)
                 {
                     if (stopwatchtime > fpsCalcTemp * 10000000)
                     {
                         FramesPerSecond();
                         fpsCalcTemp++;
                     }
-                    oldgameClock = gameClock;
+                    //timerDelayLabel.Text = "Currentframe made step of " + (currentFrame - oldFrameCount);
+                    if (currentFrame - oldFrameCount > 1)
+                    {
+                        timerDelayLabel.Text = "Step delay of: " + (currentFrame - oldFrameCount) + ", performance was: " + ((stopWatch.ElapsedTicks - stopwatchtime) / 10).ToString() + "µs";
+                    }
+                    oldFrameCount = currentFrame;
+                    //gameFramesLabel.Text = gameClock.ToString();
+                    gameFramesLabel.Text = currentFrame.ToString();
                     gameClockLabel.Text = gameClock.ToString();
                     NextFrame();
-                    timerDelayLabel.Text = "" + (gameClock - targetclock);
-                    while (gameClock - targetclock > 0.01666666666666666666666666666667f)
-                    {
-                        NextFrame();
-                    }
+                    //timerDelayLabel.Text = "";
                 }
                 performanceText.Text = ((stopWatch.ElapsedTicks - stopwatchtime) / 10).ToString() + "µs";
                 stopwatchtime = stopWatch.ElapsedTicks;
             }));
-            Thread.Sleep(1);
+            //Thread.Sleep(1);
             goto dontCare;
         }
 
         public void NextFrame()
         {
-            targetclock += 0.01666666666666666666666666666667f;
-            frames.Text = (++currentFrame).ToString();
             fpsTemp++;
             if (currentFrame < maxFrame)
             {
@@ -162,7 +170,7 @@ namespace TASumbra
             }
             else
             {
-                finished = true;
+                //finished = true;
             }
         }
 
