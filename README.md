@@ -8,12 +8,12 @@ Note: A movie refers to a file that stores input per frame.
 
 1. First download the latest release from the releases tab.
 2. Extract it wherever you want.
-3. Open the program and create a new or load an existing movie.
-4. Start your penumbra game.
+3. Open the program and create a new movie or load an existing one.
+4. Start Penumbra : Black Plague.
 5. In the RunLauncher tab in TASumbra click on "Attach to game".
-6. That is all, now when you start playing TASumbra uses the input defined in the currently selected movie.
+6. That is all, now when you start playing TASumbra will press keys defined in the currently selected movie.
 
-- Down means the key will be activated from that frame onwards, Up means the key is released.
+- Down means the key will be pressed from that frame onwards, Up means the key is released.
 - Loading a save or starting a new game will reset TASumbra to frame 1.
 - You have to make a different movie for every level.
 
