@@ -1,4 +1,4 @@
 # TASumbra
-TASumbra is a software that enables Tool Assisted Speedrun (TAS) for Penumbra : Black Plague
+TASumbra enables speedrunners to create and run Tool Assisted Speedrun (TAS) clips for Penumbra : Black Plague
 
 Any help in testing or improving the software is appreciated !
